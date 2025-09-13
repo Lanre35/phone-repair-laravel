@@ -131,10 +131,14 @@
                                 <tr>
                                     <td>{{ $repair->ticket_number }}</td>
                                     <td>{{ $repair->customer->name }}</td>
-                                    <td>{{ $repair->phone->brand }}</td>
+                                    <td>{{ $repair->phone->brand  }} - {{ $repair->phoneModel->model_number }}</td>
                                     <td>{{ $repair->issue_description }}</td>
-                                    <td>{{ ucfirst($repair->status) }}</td>
-                                    {{-- <td>{{ $repair->repair_date->format('Y-m-d') }}</td> --}}
+                                    <td>{{ ucfirst($repair->status->name ?? 'unknown') }}</td>
+                                    @if(!$repair->repair_date)
+                                        <td>N/A</td>
+                                    @else
+                                        <td>{{ $repair->repair_date->format('Y-m-d') }}</td>
+                                    @endif
                                 </tr>
                                 @endforeach
                             </tbody>

@@ -24,7 +24,7 @@ class RepairController extends Controller
         $models = PhoneModel::all();
         $priorities = PriorityModel::all();
         $statuses = Status::all();
-        $repairs = Repair::with(['customer', 'phone'])->get();
+        $repairs = Repair::with(['customer', 'phone', 'phoneModel', 'status', 'priority'])->get();
         // dd();
         return view('Repairs.index', compact('customers','brands','models', 'priorities', 'statuses', 'repairs'));
     }
@@ -73,7 +73,8 @@ class RepairController extends Controller
      */
     public function show(int $id)
     {
-        //
+    $repair = Repair::with(['customer', 'phone', 'phoneModel', 'priority', 'status'])->findOrFail($id);
+    return view('Repairs.show', compact('repair'));
     }
 
     /**
@@ -81,7 +82,8 @@ class RepairController extends Controller
      */
     public function edit(int $id)
     {
-        //
+        $repair = Repair::with(['customer', 'phone', 'phoneModel', 'priority', 'status'])->findOrFail($id);
+        return view('Repairs.edit', compact('repair'));
     }
 
     /**
@@ -89,7 +91,22 @@ class RepairController extends Controller
      */
     public function update(Request $request, int $id)
     {
-        //
+        $validatedData = $request->validate([
+            'customer_name' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:15',
+            'issue_description' => 'required|string|max:255',
+            'estimated_cost' => 'required|numeric',
+            'final_cost' => 'required|numeric',
+            'repair_date' => 'required|date',
+            'completion_date' => 'required|date',
+            'notes' => 'required|string',
+        ]);
+
+        $repair = Repair::findOrFail($id);
+        $repair->update($validatedData);
+
+        return redirect()->route('repairs.index')->with('success', 'Repair updated successfully.');
+        // dd($request->all());
     }
 
     /**

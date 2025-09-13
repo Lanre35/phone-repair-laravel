@@ -31,3 +31,8 @@ Route::resource('add-phone-name',PhoneController::class);
 Route::resource('add-phone-model',PhoneModelController::class);
 Route::resource('priority',PriorityController::class);
 Route::resource('status', StatusController::class);
+Route::post('repairs/status/{id}',[StatusController::class,'update']);
+Route::post('repairs/priority/{id}',[PriorityController::class,'update']);
+Route::get('show/{id}',[RepairController::class,'show'])->name('repairs.show');
+Route::get('edit/{id}',[RepairController::class,'edit'])->name('repairs.edit');
+

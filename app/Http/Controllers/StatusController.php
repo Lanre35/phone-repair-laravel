@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\StatusEnum;
+use App\Models\Repair;
 use App\Models\Status;
 use Illuminate\Http\Request;
 
@@ -60,7 +62,31 @@ class StatusController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
+        $request->validate([
+            'status' => 'required|exists:statuses,id',
+        ]);
+
+        $repair = Repair::find($id);
+        if (!$repair) {
+            return redirect()->back()->with('error', 'Repair ticket not found.');
+        }
+
+        // dd($request->input('status'));
+        //pry_key status
+        $repair->status_id = $request->input('status');
+
+        //Set completion_date if status is not "Pending"
+        $pendingStatus = Status::where('name', $repair->status_id)->value('id');
+        $pendingStatus = $repair->status_id;
+
+        // $repair->completion_date = $request->input('status') != $pendingStatus ? now() : null;
+
+        if ($repair->save()) {
+            return redirect()->back()->with('success', 'Repair status updated successfully.');
+        } else {
+            return redirect()->back()->with('error', 'Failed to update repair status.');
+        }
     }
 
     /**

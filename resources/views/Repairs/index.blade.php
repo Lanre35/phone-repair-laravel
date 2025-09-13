@@ -181,8 +181,9 @@
                                     <th>Device</th>
                                     <th>Issue</th>
                                     <th>Status</th>
-                                    {{-- <th>Cost</th> --}}
-                                    {{-- <th>Date</th> --}}
+                                    <th>Periority</th>
+                                    <th>Cost</th>
+                                    <th>Date</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -193,13 +194,13 @@
                                     <td>{{ $repair->ticket_number }}</td>
                                     <td>{{ $repair->customer->name }}</td>
                                     <td>{{ $repair->phone_number }}</td>
-                                    <td>{{ $repair->phone->brand }}</td>
+                                    <td>{{ $repair->phoneModel->model }}</td>
                                     <td>{{ $repair->issue_description }}</td>
                                     <td>
-                                        <form action="{{ route('repairs.update', $repair->id) }}" method="POST">
+                                        <form action="{{ route('status.update', $repair->id) }}" method="POST">
                                             @csrf
                                             @method('PUT')
-                                            <select name="status_id" class="form-select form-select-sm" onchange="this.form.submit()">
+                                            <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
                                                 @foreach($statuses as $status)
                                                     <option value="{{ $status->id }}" {{ $repair->status_id == $status->id ? 'selected' : '' }}>
                                                         {{ $status->name }}
@@ -208,6 +209,21 @@
                                             </select>
                                         </form>
                                     </td>
+                                    <td>
+                                        <form action="{{ route('priority.update', $repair->id) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <select name="priority" class="form-select form-select-sm" onchange="this.form.submit()">
+                                                @foreach($priorities as $priority)
+                                                    <option value="{{ $priority->id }}" {{ $repair->priority_id == $priority->id ? 'selected' : '' }}>
+                                                        {{ $priority->priority }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </form>
+                                    </td>
+                                    <td>{{ $repair->final_cost }}</td>
+                                    <td>{{ $repair->completion_date }}</td>
                                     <td>
                                         <div class="btn-group" role="group">
                                             <a href="{{ route('repairs.show', $repair->id) }}" class="btn btn-sm btn-info">

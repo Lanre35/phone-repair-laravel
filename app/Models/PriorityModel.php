@@ -10,4 +10,9 @@ class PriorityModel extends Model
     protected $fillable = [
         'priority',
     ];
+
+    public function repairs()
+    {
+        return $this->hasMany(Repair::class, 'priority_id');
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Priority;
 use App\Models\PriorityModel;
+use App\Models\Repair;
 use Illuminate\Http\Request;
 
 class PriorityController extends Controller
@@ -56,9 +57,27 @@ class PriorityController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(Request $request , $id)
     {
-        //
+        $request->validate([
+            'priority' => 'required|exists:priorities,id',
+        ]);
+
+        $repair = Repair::find($id);
+        if (!$repair) {
+            return redirect()->back()->with('error', 'Repair not found.');
+        }
+
+        $repair->priority_id = $request->input('priority');
+        $periority = PriorityModel::find($repair->priority_id);
+        $periority = $repair->priority_id;
+
+
+        if ($repair->save()) {
+            return redirect()->back()->with('success', 'Repair status updated successfully.');
+        } else {
+            return redirect()->back()->with('error', 'Failed to update repair status.');
+        }
     }
 
     /**

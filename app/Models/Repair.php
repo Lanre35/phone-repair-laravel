@@ -32,7 +32,6 @@ class Repair extends Model
         'completion_date' => 'date',
         'estimated_cost' => 'decimal:2',
         'final_cost' => 'decimal:2',
-        'priority' => Priority::class
     ];
 
     public function customer()
@@ -50,6 +49,15 @@ class Repair extends Model
         return $this->belongsTo(PhoneModel::class, 'device_model_id');
     }
 
+    public function status()
+    {
+        return $this->belongsTo(Status::class, 'status_id');
+    }
+
+    public function priority()
+    {
+        return $this->belongsTo(PriorityModel::class, 'priority_id');
+    }
 
 
     protected static function boot()
@@ -59,5 +67,6 @@ class Repair extends Model
         static::creating(function ($repair) {
             $repair->ticket_number = 'TKT-' . strtoupper(uniqid());
         });
+
     }
 }

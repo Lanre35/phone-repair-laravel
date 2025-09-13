@@ -16,14 +16,12 @@ return new class extends Migration
             $table->string('ticket_number')->unique();
             $table->foreignId('customer_id')->constrained()->onDelete('cascade');
             $table->string('phone_number');
-            // $table->unsignedBigInteger('device_brand');
             $table->foreignId('device_brand_id')->constrained('phones')->onDelete('cascade');
-            // $table->unsignedBigInteger('device_model');
             $table->foreignId('device_model_id')->constrained('phone_models')->onDelete('cascade');
             $table->text('issue_description');
-            $table->enum('status', ['pending', 'in_progress', 'completed', 'ready_pickup', 'picked_up']);
+            // $table->enum('status', ['pending', 'in_progress', 'completed', 'ready_pickup', 'picked_up']);
             $table->foreignId('status_id')->constrained('statuses')->onDelete('cascade');
-            $table->enum('priority', ['low', 'medium', 'high', 'urgent'])->default('medium');
+            // $table->enum('priority', ['low', 'medium', 'high', 'urgent'])->default('medium');
             $table->foreignId('priority_id')->constrained('priorities')->onDelete('cascade');
             $table->decimal('estimated_cost', 10, 2)->nullable();
             $table->decimal('final_cost', 10, 2)->nullable();
