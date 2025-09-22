@@ -61,6 +61,7 @@ class CustomerController extends Controller
      */
     public function edit(Customer $customer)
     {
+        $customer->load('repairs');
         return view('customers.edit', compact('customer'));
     }
 

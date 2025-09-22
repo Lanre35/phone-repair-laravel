@@ -3,32 +3,76 @@
 
 
 <div class="container-fluid">
-    <div class="row">
-        <!-- Sidebar -->
-        <div class="col-md-3">
-            <div class="sidebar">
-                <div class="list-group">
-                    <a href="{{ route('dashboard') }}" class="list-group-item list-group-item-action">
-                        <i class="bi bi-speedometer2"></i> Dashboard
-                    </a>
-                    <a href="{{ route('repairs.index') }}" class="list-group-item list-group-item-action">
-                        <i class="bi bi-tools"></i> Repair Jobs
-                    </a>
-                    <a href="{{ route('customers.index') }}" class="list-group-item list-group-item-action">
-                        <i class="bi bi-people"></i> Customers
-                    </a>
-                    <a href="{{ route('inventories.index') }}" class="list-group-item list-group-item-action">
-                        <i class="bi bi-box"></i> Inventory
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action">
-                        <i class="bi bi-graph-up"></i> Reports
-                    </a>
-
-                    <a href="{{ route('setting.index') }}" class="list-group-item list-group-item-action">
-                        <i class="bi bi-gear"></i> Settings
-                    </a>
+    @if(session('success'))
+        <div aria-live="polite" aria-atomic="true" class="position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 1080;">
+            <div class="toast align-items-center text-bg-success border-0 show" id="successToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="2500">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current me-2" fill="none" viewBox="0 0 24 24" style="width:1.5em;height:1.5em;vertical-align:middle;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span>{{ session('success') }}</span>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
             </div>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var toastEl = document.getElementById('successToast');
+                if (toastEl) {
+                    var toast = new bootstrap.Toast(toastEl, { delay: 2500 });
+                    toast.show();
+                }
+            });
+        </script>
+        {{-- <div>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div> --}}
+    @endif
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3 p-0">
+            <nav class="bg-gradient bg-light shadow h-100 sidebar d-flex flex-column" style="min-height: 100vh;">
+                <div class="p-4 border-bottom">
+                    <h5 class="text-primary fw-bold">Menu</h5>
+                </div>
+                <ul class="nav flex-column p-3 gap-2">
+                    <li class="nav-item">
+                        <a href="{{ route('dashboard') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('dashboard') ? 'active bg-primary text-white rounded' : 'text-dark' }}">
+                            <span class="me-2"><i class="bi bi-speedometer2"></i></span> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('repairs.index') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('repairs.index') ? 'active bg-primary text-white rounded' : 'text-dark' }}">
+                            <span class="me-2"><i class="bi bi-tools"></i></span> Repair Jobs
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('customers.index') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('customers.index') ? 'active bg-primary text-white rounded' : 'text-dark' }}">
+                            <span class="me-2"><i class="bi bi-people"></i></span> Customers
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('inventories.index') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('inventories.index') ? 'active bg-primary text-white rounded' : 'text-dark' }}">
+                            <span class="me-2"><i class="bi bi-box"></i></span> Inventory
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link d-flex align-items-center text-dark">
+                            <span class="me-2"><i class="bi bi-graph-up"></i></span> Reports
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('setting.index') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('setting.index') ? 'active bg-primary text-white rounded' : 'text-dark' }}">
+                            <span class="me-2"><i class="bi bi-gear"></i></span> Settings
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
 
         <!-- Main Content Area -->
@@ -45,99 +89,76 @@
 
             <div class="modal fade" id="addRepairModal" tabindex="-1">
                 <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">New Repair Job</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <div class="modal-content rounded-4 border-0">
+                        <div class="modal-header bg-primary text-white rounded-top-4">
+                            <h4 class="modal-title fw-bold"><i class="bi bi-tools me-2"></i>New Repair Job</h4>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body p-4">
                             <form id="addRepairForm" action="{{ route('repairs.store') }}" method="POST">
                                 @csrf
-                                <div class="row">
+                                <div class="row g-3">
                                     <div class="col-md-6">
-                                        <div class="mb-3">
-                                            {{-- <label for="customerName" class="form-label">Customer Name</label>
-                                            <input value="{{ old('customer_name') }}" type="text" class="form-control" id="customerName" name="customer_name" required> --}}
-                                           <label for="name" class="form-label">Name</label>
-                                            <select class="form-select" id="deviceBrand" name="name" required>
-                                                <option value="">Select Name</option>
-                                                @foreach ($customers as $customer)
-                                                    <option value="{{ $customer->id }}">{{ $customer->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+                                        <label for="name" class="form-label">Name</label>
+                                        <select class="form-select" id="deviceBrand" name="name" required>
+                                            <option value="">Select Name</option>
+                                            @foreach ($customers as $customer)
+                                                <option value="{{ $customer->id }}">{{ $customer->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label for="customerPhone" class="form-label">Phone Number</label>
-                                            <input type="tel" class="form-control" id="customerPhone" name="phone_number" required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label for="deviceBrand" class="form-label">Device Brand</label>
-                                            <select class="form-select" id="deviceBrand" name="device_brand" required>
-                                                <option value="">Select Brand</option>
-                                                @foreach ($brands as $brand)
-                                                    <option value="{{ $brand->id }}">{{ $brand->brand }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+                                        <label for="customerPhone" class="form-label">Phone Number</label>
+                                        <input type="tel" class="form-control" id="customerPhone" name="phone_number" required>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="mb-3">
-                                            {{-- <label for="deviceModel" class="form-label">Device Model</label>
-                                            <input type="text" class="form-control" id="deviceModel" required> --}}
-                                            <label for="deviceBrand" class="form-label">Device Model</label>
-                                            <select class="form-select" id="deviceModel" name="device_model" required>
-                                                <option value="">Select Model</option>
-                                                @foreach ($models as $model)
-                                                    <option value="{{ $model->id }}">{{ $model->model_number }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="issueDescription" class="form-label">Issue Description</label>
-                                    <textarea name="issue" class="form-control" id="issueDescription" rows="3" required></textarea>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label for="estimatedCost" class="form-label">Estimated Cost</label>
-                                            <input name="cost" type="number" class="form-control" id="estimatedCost" step="0.01">
-                                        </div>
+                                        <label for="deviceBrand" class="form-label">Device Brand</label>
+                                        <select class="form-select" id="deviceBrand" name="device_brand" required>
+                                            <option value="">Select Brand</option>
+                                            @foreach ($brands as $brand)
+                                                <option value="{{ $brand->id }}">{{ $brand->brand }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label for="priority" class="form-label">Priority</label>
-                                            <select name="priority" class="form-select" id="priority">
-                                                <option value="">Default</option>
-                                                @foreach ($priorities as $priority)
-                                                    <option value="{{ $priority->id }}">{{ $priority->priority }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+                                        <label for="deviceModel" class="form-label">Device Model</label>
+                                        <select class="form-select" id="deviceModel" name="device_model" required>
+                                            <option value="">Select Model</option>
+                                            @foreach ($models as $model)
+                                                <option value="{{ $model->id }}">{{ $model->model_number }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
-
-                                     <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label for="statusFilter" class="form-label">Status</label>
-                                            <select name="status" class="form-select" id="statusFilter">
-                                                <option value="">All Status</option>
-                                                @foreach ($statuses as $status)
-                                                    <option value="{{ $status->id }}">{{ $status->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+                                    <div class="col-12">
+                                        <label for="issueDescription" class="form-label">Issue Description</label>
+                                        <textarea name="issue" class="form-control" id="issueDescription" rows="3" required></textarea>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="estimatedCost" class="form-label">Estimated Cost</label>
+                                        <input name="cost" type="number" class="form-control" id="estimatedCost" step="0.01">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="priority" class="form-label">Priority</label>
+                                        <select name="priority" class="form-select" id="priority">
+                                            <option value="">Default</option>
+                                            @foreach ($priorities as $priority)
+                                                <option value="{{ $priority->id }}">{{ $priority->priority }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="statusFilter" class="form-label">Status</label>
+                                        <select name="status" class="form-select" id="statusFilter">
+                                            <option value="">All Status</option>
+                                            @foreach ($statuses as $status)
+                                                <option value="{{ $status->id }}">{{ $status->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                             </form>
                         </div>
-                        <div class="modal-footer">
+                        <div class="modal-footer bg-light rounded-bottom-4 px-4 py-3">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-primary" form="addRepairForm">Create Repair Job</button>
                         </div>
@@ -160,7 +181,7 @@
                             <input type="date" class="form-control" id="dateFilter">
                         </div>
                         <div class="col-md-4">
-                            <input type="text" class="form-control" id="searchFilter" placeholder="Search customer or ticket...">
+                            <input type="text" name="search" class="form-control" id="searchFilter" placeholder="Search customer or ticket...">
                         </div>
                         <div class="col-md-2">
                             <button class="btn btn-outline-secondary" onclick="clearFilters()">Clear</button>
@@ -170,31 +191,40 @@
             </div>
 
             <div class="card shadow">
-                <div class="card-body">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="m-0 fw-bold"><i class="bi bi-tools me-2"></i>Recent Repair Jobs</h5>
+                </div>
+                <div class="card-body p-0">
                     <div class="table-responsive">
-                        <table class="table table-hover" id="repairsTable">
-                            <thead>
+                        <table class="table table-hover align-middle mb-0" id="repairsTable" style="font-size: 0.95rem;">
+                            <thead class="table-light">
                                 <tr>
-                                    <th>Ticket #</th>
-                                    <th>Customer</th>
-                                    <th>Phone</th>
-                                    <th>Device</th>
-                                    <th>Issue</th>
-                                    <th>Status</th>
-                                    <th>Periority</th>
-                                    <th>Cost</th>
-                                    <th>Date</th>
-                                    <th>Actions</th>
+                                    <th scope="col">Ticket #</th>
+                                    <th scope="col">Customer</th>
+                                    <th scope="col">Phone</th>
+                                    <th scope="col">Device</th>
+                                    <th scope="col">Issue</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Priority</th>
+                                    <th scope="col">Cost</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- Repairs will be populated here -->
                                 @forelse ($repairs as $repair)
                                 <tr>
-                                    <td>{{ $repair->ticket_number }}</td>
-                                    <td>{{ $repair->customer->name }}</td>
+                                    <td class="fw-bold text-primary">{{ $repair->ticket_number }}</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <span class="bg-light rounded-circle p-2 me-2">
+                                                <i class="bi bi-person-circle text-secondary"></i>
+                                            </span>
+                                            <span>{{ $repair->customer->name }}</span>
+                                        </div>
+                                    </td>
                                     <td>{{ $repair->phone_number }}</td>
-                                    <td>{{ $repair->phoneModel->model }}</td>
+                                    <td><span class="badge bg-info text-dark">{{ $repair->phoneModel->model_number }}</span></td>
                                     <td>{{ $repair->issue_description }}</td>
                                     <td>
                                         <form action="{{ route('status.update', $repair->id) }}" method="POST">
@@ -202,40 +232,47 @@
                                             @method('PUT')
                                             <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
                                                 @foreach($statuses as $status)
-                                                    <option value="{{ $status->id }}" {{ $repair->status_id == $status->id ? 'selected' : '' }}>
-                                                        {{ $status->name }}
-                                                    </option>
+                                                    @if($repair->status_id == $status->id && empty($repair->completion_date))
+                                                        <option value="{{ $status->id }}" selected>Pending</option>
+                                                    @else
+                                                        <option value="{{ $status->id }}" {{ $repair->status_id == $status->id ? 'selected' : '' }}>
+                                                            {{ $status->name }}
+                                                        </option>
+                                                    @endif
                                                 @endforeach
                                             </select>
                                         </form>
+                                        @if(!empty($repair->completion_date))
+                                            <span class="badge bg-success ms-2">Completed</span>
+                                        @endif
                                     </td>
                                     <td>
-                                        <form action="{{ route('priority.update', $repair->id) }}" method="POST">
-                                            @csrf
-                                            @method('PUT')
-                                            <select name="priority" class="form-select form-select-sm" onchange="this.form.submit()">
-                                                @foreach($priorities as $priority)
-                                                    <option value="{{ $priority->id }}" {{ $repair->priority_id == $priority->id ? 'selected' : '' }}>
-                                                        {{ $priority->priority }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </form>
+                                        @if(isset($repair->priority))
+                                            <span class="badge bg-primary">{{ $repair->priority->priority ?? '' }}</span>
+                                        @else
+                                            <span class="text-muted">Default</span>
+                                        @endif
                                     </td>
-                                    <td>{{ $repair->final_cost }}</td>
-                                    <td>{{ $repair->completion_date }}</td>
+                                    <td><span class="badge bg-warning text-dark">{{ $repair->final_cost }}</span></td>
+                                    <td>
+                                        @if(!empty($repair->completion_date))
+                                            <span class="badge bg-secondary">{{ $repair->completion_date }}</span>
+                                        @else
+                                            <span class="text-muted">N/A</span>
+                                        @endif
+                                    </td>
                                     <td>
                                         <div class="btn-group" role="group">
-                                            <a href="{{ route('repairs.show', $repair->id) }}" class="btn btn-sm btn-info">
+                                            <a href="{{ route('repairs.show', $repair->id) }}" class="btn btn-sm btn-info" title="View">
                                                 <i class="bi bi-eye"></i>
                                             </a>
-                                            <a href="{{ route('repairs.edit', $repair->id) }}" class="btn btn-sm btn-warning">
+                                            <a href="{{ route('repairs.edit', $repair->id) }}" class="btn btn-sm btn-warning" title="Edit">
                                                 <i class="bi bi-pencil"></i>
                                             </a>
                                             <form action="{{ route('repairs.destroy', $repair->id) }}" method="POST" style="display: inline;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">
+                                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')" title="Delete">
                                                     <i class="bi bi-trash"></i>
                                                 </button>
                                             </form>
@@ -244,7 +281,7 @@
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td colspan="9" class="text-center">No repairs found.</td>
+                                    <td colspan="10" class="text-center">No repairs found.</td>
                                 </tr>
                                 @endforelse
                             </tbody>

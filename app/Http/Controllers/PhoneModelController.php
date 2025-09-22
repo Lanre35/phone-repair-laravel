@@ -44,7 +44,7 @@ class PhoneModelController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
     }
 
     /**

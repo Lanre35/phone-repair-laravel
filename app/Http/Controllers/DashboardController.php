@@ -17,23 +17,24 @@ class DashboardController extends Controller
 
     public function index()
     {
-        $activeStatuses = Status::whereIn('name', ['pending', 'In progress', 'new'])->pluck('id');
-        $completedStatus = Status::where('name', ['completed'])->pluck('id');
-        $pendingPickupStatus = Status::where('name', ['ready_pickup'])->pluck('id')->first();
-
+    $activeStatuses = Status::whereIn('name', ['pending', 'In progress', 'new'])->pluck('id');
+    $completedStatus = Status::where('name', 'completed')->pluck('id')->first();
+    $pendingPickupStatus = Status::where('name', ['Pending pickup'])->pluck('id')->first();
+    $picked = Status::where('name', 'picked up')->pluck('id')->first();
         // dd($activeStatuses, $completedStatus, $pendingPickupStatus);
 
         $stats = [
             'active_repairs' => Repair::whereIn('status_id', $activeStatuses)->count(),
-            'completed_today' => Repair::where('status_id', 'completed')
+            'completed_today' => Repair::where('status_id', $completedStatus)
                 ->whereDate('completion_date', today())
                 ->count(),
-            'pending_pickup' => Repair::where('status_id', 'ready_pickup')->count(),
+            'pending_pickup' => Repair::where('status_id', $pendingPickupStatus)->count(),
             'total_customers' => Customer::count(),
             'low_stock_items' => Inventory::whereRaw('stock_quantity <= min_stock')->count(),
-            'daily_revenue' => Repair::where('status_id', 'completed')
+            'daily_revenue' => Repair::where('status_id', $completedStatus)
                 ->whereDate('completion_date', today())
-                ->sum('final_cost') ?? 0
+                ->sum('final_cost') ?? 0,
+            'pick_up' => Repair::where('status_id', $picked)->whereDate('pickup_date', today())->count(),
         ];
         // dd($stats['pending_pickup']);
 
@@ -41,9 +42,26 @@ class DashboardController extends Controller
             ->latest()
             ->take(10)
             ->get();
+        $completed_repairs = Repair::with('customer')
+            ->where('status_id', $completedStatus)
+            ->latest()
+            ->take(10)
+            ->get();
+
+        $pending_pickup_repairs = Repair::with('customer')
+            ->where('status_id', $pendingPickupStatus)
+            ->latest()
+            ->take(10)
+            ->get();
+        $picked_repairs = Repair::with('customer')
+            ->where('status_id', $picked)
+            ->latest()
+            ->take(10)
+            ->get();
+
 
         return view('dashboard', compact('stats', 'recent_repairs'));
-        // return response()->view('dashboard', compact('stats', 'recent_repairs'));
+
 
     }
 }

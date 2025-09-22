@@ -16,10 +16,12 @@ class PhoneController extends Controller
     public function index()
     {
         $models = PhoneModel::all();
-        $brands = DB::table('phones')
-            ->join('phone_models','phone_models.id','=','phones.model_id')
-            ->select('phones.brand','phone_models.model_number')
-            ->get();
+        // $brands = DB::table('phones')
+        //     ->join('phone_models','phone_models.id','=','phones.model_id')
+        //     ->select('phones.brand','phone_models.model_number')
+        //     ->get();
+        $brands = Phone::with('phoneModel')->get();
+        // dd($brands[0]->brand);
 
         return view('phones.add-phone-name', compact('models','brands'));
     }
@@ -58,32 +60,45 @@ class PhoneController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(int $id)
     {
-        //
+        $show = Phone::findOrFail($id);
+        return view('phones.show-phone', compact('show'));
+
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(int $id)
     {
-        //
+        $edit = Phone::findOrFail($id);
+        $models = PhoneModel::all();
+        return view('phones.phone-edit', compact('edit','models'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, int $id)
     {
-        //
+        $validation = $request->validate([
+            'brand' => 'required|string|max:255',
+        ]);
+
+        $update = Phone::findOrFail($id);
+        $update->save($validation);
+
+        return redirect('phones')->with('success','Updated successful');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
-        //
+        $delete = Phone::findOrFail($id);
+        $delete->delete();
+        return redirect()->back()->with('success', 'Phone deleted successfully.');
     }
 }

@@ -62,7 +62,7 @@ class RepairController extends Controller
            'issue_description' => $request->input('issue'),
         ]);
         if($save){
-            return redirect()->back()->with('success', 'Repair ticket created successfully.');
+            return redirect()->back()->with('success', 'Repair created successfully.');
         } else {
             return redirect()->back()->with('error', 'Failed to create repair ticket.');
         }
@@ -109,11 +109,20 @@ class RepairController extends Controller
         // dd($request->all());
     }
 
+    public function searchByTicket(Request $request)
+    {
+        $search = Repair::where('ticket_number',$request->search)->select('ticket_number','phone_number');
+        return response()->json($search);
+    }
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(int $id)
     {
-        //
+        $repair = Repair::findOrFail($id);
+        $repair->delete();
+
+        return redirect()->route('repairs.index')->with('success', 'Repair deleted successfully.');
     }
 }

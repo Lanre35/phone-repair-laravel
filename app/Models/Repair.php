@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
+
 use App\Enums\Priority;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 class Repair extends Model
 {
+    use HasFactory;
+    use SoftDeletes;
     protected $table = 'repairs';
 
     protected $fillable = [

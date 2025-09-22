@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<div class="container mt-5">
+<div class="container mt-3">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow-lg border-0 rounded-lg portfolio-card">
@@ -12,6 +12,7 @@
                         <p class="text-muted small">Ticket #: {{ $repair->ticket_number }}</p>
                         <a href="{{ route('repairs.edit', $repair->id) }}" class="btn btn-warning btn-sm mb-2">Edit</a>
                         <a href="{{ route('repairs.index') }}" class="btn btn-secondary btn-sm">Back</a>
+                        
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
