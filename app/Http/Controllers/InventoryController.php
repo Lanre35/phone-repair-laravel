@@ -88,6 +88,11 @@ class InventoryController extends Controller
      */
     public function destroy(Inventory $inventory)
     {
-        //
+        $inventory = Inventory::find($inventory->id);
+        if (!$inventory) {
+            return redirect()->back()->with('error', 'Inventory item not found!');
+        }
+        $inventory->delete();
+        return redirect()->back()->with('success', 'Inventory item deleted successfully!');
     }
 }
