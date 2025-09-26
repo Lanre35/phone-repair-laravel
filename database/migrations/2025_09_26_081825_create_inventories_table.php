@@ -12,16 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('inventories', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('part_name');
-            $table->string('sku')->unique();
-            $table->string('category');
+            $table->unsignedBigInteger('skuId')->unique();
+            $table->unsignedBigInteger('categoryId');
             $table->integer('stock_quantity');
             $table->decimal('cost_price', 10, 2);
             $table->decimal('selling_price', 10, 2);
             $table->integer('min_stock')->default(10);
             $table->text('description')->nullable();
             $table->timestamps();
+
+            $table->foreign('skuId')->references('id')->on('products');
+            $table->foreign('categoryId')->references('id')->on('products');
         });
     }
 

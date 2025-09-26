@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\Inventory;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,9 @@ class InventoryController extends Controller
      */
     public function index()
     {
-        return view('Inventories.index');
+        $products = Product::all();
+        $inventories = Inventory::all();
+        return view('Inventories.index',['products'=>$products, 'inventories'=>$inventories]);
     }
 
     /**
@@ -28,7 +31,19 @@ class InventoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validation = $request->validate([
+            'part_name' => 'required|string|max:255',
+            'skuId' => 'required|string|max:100|unique:inventories,skuId',
+            'categoryId' => 'required|nullable|string|max:100',
+            'stock_quantity' => 'required|integer|min:0',
+            'cost_price' => 'required|numeric|min:0',
+            'selling_price' => 'required|numeric|min:0',
+            'min_stock' => 'nullable|integer|min:0',
+            'description' => 'nullable|string'
+        ]);
+
+        Inventory::create($validation);
+        return redirect()->back()->with('success', 'Inventory item added successfully!');
     }
 
     /**
@@ -36,7 +51,7 @@ class InventoryController extends Controller
      */
     public function show(Inventory $inventory)
     {
-        //
+
     }
 
     /**
@@ -44,7 +59,8 @@ class InventoryController extends Controller
      */
     public function edit(Inventory $inventory)
     {
-        //
+        $products = Product::all();
+        return view('Inventories.edit', compact('inventory', 'products'));
     }
 
     /**
@@ -52,7 +68,19 @@ class InventoryController extends Controller
      */
     public function update(Request $request, Inventory $inventory)
     {
-        //
+        $validation = $request->validate([
+            'part_name' => 'required|string|max:255',
+            'skuId' => 'required|string|max:100|unique:inventories,skuId,'.$inventory->id,
+            'categoryId' => 'required|nullable|string|max:100',
+            'stock_quantity' => 'required|integer|min:0',
+            'cost_price' => 'required|numeric|min:0',
+            'selling_price' => 'required|numeric|min:0',
+            'min_stock' => 'nullable|integer|min:0',
+            'description' => 'nullable|string'
+        ]);
+
+        $inventory->update($validation);
+        return redirect()->route('inventories.index')->with('success', 'Inventory item updated successfully!');
     }
 
     /**

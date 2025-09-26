@@ -125,7 +125,7 @@
 
 
             <!-- Recent Repairs Table -->
-            <div class="card shadow mb-4">
+            <div class="card shadow mb-4 rounded-4">
                 <div class="card-header py-3 bg-primary text-white">
                     <h5 class="m-0 fw-bold"><i class="bi bi-clock-history me-2"></i>Recent Repairs</h5>
                 </div>

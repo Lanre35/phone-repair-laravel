@@ -10,4 +10,9 @@ class Product extends Model
         'product',
         'abbreviation'
     ];
+
+    public function inventories()
+    {
+        return $this->hasMany(Inventory::class, 'categoryId');
+    }
 }

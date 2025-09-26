@@ -23,7 +23,7 @@
                         </a>
                     </li>
                     <li class="nav-item mb-2">
-                        <a href="{{ route('products.index') }}" class="nav-link text-dark">
+                        <a href="{{ route('products.create') }}" class="nav-link text-dark">
                             <i class="bi bi-box"></i> Products
                         </a>
                     </li>

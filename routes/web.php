@@ -42,4 +42,6 @@ Route::delete('phones/{id}',[PhoneController::class,'destroy'])->name('phones.de
 Route::get('phones/phone-edit/{id}',[PhoneController::class,'edit'])->name('phones.edit')->middleware('auth');
 Route::resource('phones',PhoneController::class)->middleware('auth');
 Route::resource('products', \App\Http\Controllers\ProductController::class)->middleware('auth');
+Route::resource('inventory',InventoryController::class)->middleware('auth');
+// Route::resource('inventory',InventoryController::class)->middleware('auth');
 

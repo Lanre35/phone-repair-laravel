@@ -14,7 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('settings.products');
+        // return view('settings.products');
     }
 
     /**
@@ -22,7 +22,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('settings.products');
     }
 
     /**
@@ -42,7 +42,7 @@ class ProductController extends Controller
             'abbreviation' => $request->input('product_abbreviation')
         ]);
 
-        return redirect()->route('products.index')->with('success', 'Product added successfully.');
+        return redirect()->route('products.create')->with('success', 'Product added successfully.');
     }
 
     /**

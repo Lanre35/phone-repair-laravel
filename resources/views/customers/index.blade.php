@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container-fluid">
-    @if(session('success'))
+    {{-- @if(session('success'))
         <div aria-live="polite" aria-atomic="true" class="position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 1080;">
             <div class="toast align-items-center text-bg-success border-0 show" id="successToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="2500">
                 <div class="d-flex">
@@ -25,7 +25,7 @@
                 }
             });
         </script>
-    @endif
+    @endif --}}
     <div class="row">
         <!-- Sidebar -->
         <div class="col-md-3 p-0">
@@ -116,7 +116,7 @@
                 </div>
             </div>
 
-            <div class="card shadow">
+            <div class="card shadow rounded-4">
                 <div class="card-header bg-primary text-white">
                     <h5 class="m-0 fw-bold"><i class="bi bi-people me-2"></i>Recent Customers</h5>
                 </div>
