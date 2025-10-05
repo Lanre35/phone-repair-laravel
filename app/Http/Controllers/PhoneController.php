@@ -15,15 +15,8 @@ class PhoneController extends Controller
      */
     public function index()
     {
-        $models = PhoneModel::all();
-        // $brands = DB::table('phones')
-        //     ->join('phone_models','phone_models.id','=','phones.model_id')
-        //     ->select('phones.brand','phone_models.model_number')
-        //     ->get();
-        $brands = Phone::with('phoneModel')->get();
-        // dd($brands[0]->brand);
-
-        return view('phones.add-phone-name', compact('models','brands'));
+        $brands = Phone::all();
+        return view('phones.add-phone-name',compact('brands'));
     }
 
     /**
@@ -43,13 +36,13 @@ class PhoneController extends Controller
         $selectedModels = $request->input('model');
         $validation = $request->validate([
             'brand' => 'required|string|max:255',
-            'model' => 'required|exists:phone_models,id',
+            // 'model' => 'required|exists:phone_models,id',
         ]);
 
 
         $save = Phone::create([
             'brand' => $request->brand,
-            'model_id' => $request->model,
+            // 'model_id' => $request->model,
         ]);
 
 
@@ -63,7 +56,8 @@ class PhoneController extends Controller
     public function show(int $id)
     {
         $show = Phone::findOrFail($id);
-        return view('phones.show-phone', compact('show'));
+        $model = PhoneModel::findOrFail($id);
+        return view('phones.show-phone', compact('show','model'));
 
     }
 
@@ -73,8 +67,7 @@ class PhoneController extends Controller
     public function edit(int $id)
     {
         $edit = Phone::findOrFail($id);
-        $models = PhoneModel::all();
-        return view('phones.phone-edit', compact('edit','models'));
+        return view('phones.phone-edit', compact('edit'));
     }
 
     /**
@@ -87,7 +80,8 @@ class PhoneController extends Controller
         ]);
 
         $update = Phone::findOrFail($id);
-        $update->save($validation);
+        // dd('okk');
+        $update->update($validation);
 
         return redirect('phones')->with('success','Updated successful');
     }

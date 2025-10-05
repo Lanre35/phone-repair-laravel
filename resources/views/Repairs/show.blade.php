@@ -12,14 +12,14 @@
                         <p class="text-muted small">Ticket #: {{ $repair->ticket_number }}</p>
                         <a href="{{ route('repairs.edit', $repair->id) }}" class="btn btn-warning btn-sm mb-2">Edit</a>
                         <a href="{{ route('repairs.index') }}" class="btn btn-secondary btn-sm">Back</a>
-                        
+
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
                             <h5 class="card-title mb-3">Repair Portfolio</h5>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item"><strong>Phone:</strong> {{ $repair->phone->brand ?? '-' }}</li>
-                                <li class="list-group-item"><strong>Model:</strong> {{ $repair->phoneModel->model_number ?? '-' }}</li>
+                                {{-- <li class="list-group-item"><strong>Phone:</strong> {{ $repair->phone->brand ?? '-' }}</li> --}}
+                                <li class="list-group-item"><strong>Model:</strong> {{ $repair->model->model_number ?? '-' }}</li>
                                 <li class="list-group-item"><strong>Phone Number:</strong> {{ $repair->phone_number }}</li>
                                 <li class="list-group-item"><strong>Issue:</strong> {{ $repair->issue_description }}</li>
                                 <li class="list-group-item"><strong>Priority:</strong> {{ $repair->priority->priority ?? '-' }}</li>

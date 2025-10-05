@@ -38,12 +38,8 @@
                                     <input type="text" name="phone_number" id="phone_number" class="form-control" value="{{ $repair->phone_number }}" >
                                 </div>
                                 <div class="mb-3">
-                                    <label for="device_brand" class="form-label">Device Brand</label>
-                                    <input type="text" name="device_brand" id="device_brand" class="form-control" value="{{ $repair->phone->brand ?? '' }}" readonly>
-                                </div>
-                                <div class="mb-3">
                                     <label for="device_model_id" class="form-label">Device Model</label>
-                                    <input type="text" name="device_model" id="device_model" class="form-control" value="{{ $repair->phoneModel->model ?? '' }}" readonly>
+                                    <input type="text" name="device_model" id="device_model" class="form-control" value="{{ $repair->model->model ?? '' }}" readonly>
                                 </div>
                                 <div class="mb-3">
                                     <label for="issue_description" class="form-label">Issue Description</label>

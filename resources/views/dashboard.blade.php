@@ -47,6 +47,7 @@
         <!-- Main Content Area -->
         <div class="col-md-9">
             <h2 class="mb-4">Dashboard</h2>
+            {{ session('name') }}
 
             <!-- Stats Cards -->
             <div class="row g-4 mb-4">
@@ -155,8 +156,8 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <span class="badge bg-info text-dark">{{ $repair->phone->brand }}</span>
-                                            <span class="ms-1 text-muted">{{ $repair->phoneModel->model_number }}</span>
+                                            {{-- <span class="badge bg-info text-dark">{{ $repair->phone->brand }}</span> --}}
+                                            <span class="ms-1 text-muted">{{ $repair->model->model_number }}</span>
                                         </td>
                                         <td>{{ $repair->issue_description }}</td>
                                         <td>

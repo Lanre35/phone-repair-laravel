@@ -3,30 +3,6 @@
 
 
 <div class="container-fluid">
-    {{-- @if(session('success'))
-        <div aria-live="polite" aria-atomic="true" class="position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 1080;">
-            <div class="toast align-items-center text-bg-success border-0 show" id="successToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="2500">
-                <div class="d-flex">
-                    <div class="toast-body">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current me-2" fill="none" viewBox="0 0 24 24" style="width:1.5em;height:1.5em;vertical-align:middle;">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span>{{ session('success') }}</span>
-                    </div>
-                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-            </div>
-        </div>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                var toastEl = document.getElementById('successToast');
-                if (toastEl) {
-                    var toast = new bootstrap.Toast(toastEl, { delay: 2500 });
-                    toast.show();
-                }
-            });
-        </script>
-    @endif --}}
     <div class="row">
         <!-- Sidebar -->
         <div class="col-md-3 p-0">
@@ -105,7 +81,7 @@
                                         <label for="customerPhone" class="form-label">Phone Number</label>
                                         <input type="tel" class="form-control" id="customerPhone" name="phone_number" required>
                                     </div>
-                                    <div class="col-md-6">
+                                    {{-- <div class="col-md-6">
                                         <label for="deviceBrand" class="form-label">Device Brand</label>
                                         <select class="form-select" id="deviceBrand" name="device_brand" required>
                                             <option value="">Select Brand</option>
@@ -113,7 +89,7 @@
                                                 <option value="{{ $brand->id }}">{{ $brand->brand }}</option>
                                             @endforeach
                                         </select>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-md-6">
                                         <label for="deviceModel" class="form-label">Device Model</label>
                                         <select class="form-select" id="deviceModel" name="device_model" required>
@@ -122,10 +98,6 @@
                                                 <option value="{{ $model->id }}">{{ $model->model_number }}</option>
                                             @endforeach
                                         </select>
-                                    </div>
-                                    <div class="col-12">
-                                        <label for="issueDescription" class="form-label">Issue Description</label>
-                                        <textarea name="issue" class="form-control" id="issueDescription" rows="3" required></textarea>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="estimatedCost" class="form-label">Estimated Cost</label>
@@ -148,6 +120,11 @@
                                                 <option value="{{ $status->id }}">{{ $status->name }}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+
+                                     <div class="col-12">
+                                        <label for="issueDescription" class="form-label">Issue Description</label>
+                                        <textarea name="issue" class="form-control" id="issueDescription" rows="3" required></textarea>
                                     </div>
                                 </div>
                             </form>
@@ -195,11 +172,11 @@
                                 <tr>
                                     <th scope="col">Ticket #</th>
                                     <th scope="col">Customer</th>
-                                    <th scope="col">Phone</th>
+                                    {{-- <th scope="col">Phone</th> --}}
                                     <th scope="col">Device</th>
                                     <th scope="col">Issue</th>
                                     <th scope="col">Status</th>
-                                    <th scope="col">Priority</th>
+                                    {{-- <th scope="col">Priority</th> --}}
                                     <th scope="col">Cost</th>
                                     <th scope="col">Date</th>
                                     <th scope="col">Actions</th>
@@ -217,8 +194,8 @@
                                             <span>{{ $repair->customer->name }}</span>
                                         </div>
                                     </td>
-                                    <td>{{ $repair->phone_number }}</td>
-                                    <td><span class="badge bg-info text-dark">{{ $repair->phoneModel->model_number }}</span></td>
+                                    {{-- <td>{{ $repair->phone_number }}</td> --}}
+                                    <td><span class="badge bg-info text-dark">{{ $repair->model->model_number }}</span></td>
                                     <td>{{ $repair->issue_description }}</td>
                                     <td>
                                         <form action="{{ route('status.update', $repair->id) }}" method="POST">
@@ -240,13 +217,13 @@
                                             <span class="badge bg-success ms-2">Completed</span>
                                         @endif
                                     </td>
-                                    <td>
+                                    {{-- <td>
                                         @if(isset($repair->priority))
                                             <span class="badge bg-primary">{{ $repair->priority->priority ?? '' }}</span>
                                         @else
                                             <span class="text-muted">Default</span>
                                         @endif
-                                    </td>
+                                    </td> --}}
                                     <td><span class="badge bg-warning text-dark">{{ $repair->final_cost }}</span></td>
                                     <td>
                                         @if(!empty($repair->completion_date))

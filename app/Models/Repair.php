@@ -17,7 +17,6 @@ class Repair extends Model
         'ticket_number',
         'customer_id',
         'phone_number',
-        'device_brand',
         'device_brand_id',
         'device_model',
         'device_model_id',
@@ -43,15 +42,10 @@ class Repair extends Model
         return $this->belongsTo(Customer::class);
     }
 
-    public function phone()
-    {
-        return $this->belongsTo(Phone::class, 'device_brand_id');
-    }
-
-    public function phoneModel()
-    {
-        return $this->belongsTo(PhoneModel::class, 'device_model_id');
-    }
+   public function model()
+   {
+       return $this->belongsTo(PhoneModel::class, 'device_model_id');
+   }
 
     public function status()
     {

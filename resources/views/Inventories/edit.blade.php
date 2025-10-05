@@ -130,7 +130,7 @@
                             <div class="bg-white border rounded-3 p-3 h-100 d-flex align-items-center">
                                 <i class="bi bi-person me-2 text-info"></i>
                                 <span class="fw-semibold">SKU Owner: </span>
-                                <span class="ms-1">{{ $inventory->sku_owner?? 'N/A' }}</span>
+                                <span class="ms-1">{{ Auth::user()->name ?? 'N/A' }}</span>
                             </div>
                         </div>
                     </div>

@@ -22,14 +22,6 @@
                                 <label for="brand" class="form-label">Brand</label>
                                 <input type="text" class="form-control" id="brand" name="brand" value="{{ old('brand', $edit->brand) }}" required>
                             </div>
-                            <div class="mb-3">
-                                <label for="model_number" class="form-label">Model</label>
-                                <input type="text" class="form-control" id="model_number" name="model_number" value="{{ old('model_number', $edit->phoneModel->model_number ?? '') }}" required>
-                            </div>
-                            {{-- <div class="mb-3">
-                                <label for="description" class="form-label">Description</label>
-                                <textarea class="form-control" id="description" name="description" rows="3">{{ old('description', $edit->description ?? '') }}</textarea>
-                            </div> --}}
                         </div>
                     </div>
                     <div class="d-flex justify-content-end gap-2 mt-4">

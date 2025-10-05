@@ -59,18 +59,6 @@
                                             <span class="text text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                    <div class="col-12">
-                                        <label for="model" class="form-label">Select Model</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text bg-light"><i class="bi bi-phone"></i></span>
-                                            <select name="model" class="form-select" id="model">
-                                                <option value="default" disabled selected>Select a model</option>
-                                                @foreach ($models as $model)
-                                                    <option value="{{ $model->id }}">{{ $model->model }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -92,8 +80,7 @@
                             <thead class="table-light">
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Brand</th>
-                                    <th scope="col">Model</th>
+                                    <th scope="col">Brands</th>
                                     <th scope="col">Actions</th>
                                 </tr>
                             </thead>
@@ -103,9 +90,6 @@
                                         <td class="fw-bold text-primary">{{ $key + 1 }}</td>
                                         <td>
                                             <span class="badge bg-info text-dark">{{ $brand->brand }}</span>
-                                        </td>
-                                        <td>
-                                            <span class="badge bg-secondary">{{ $brand->phoneModel->model_number }}</span>
                                         </td>
                                         <td>
                                             <div class="btn-group" role="group">

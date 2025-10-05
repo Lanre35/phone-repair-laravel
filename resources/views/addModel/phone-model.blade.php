@@ -66,6 +66,20 @@
                                             <span class="text text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
+
+                                    <div class="col-12">
+                                        <select class="form-select" name="brand" id="">
+                                            <option value="">Select Brand</option>
+                                            @forelse ($brands as $brand)
+                                                <option value="{{ $brand->id }}">{{ $brand->brand }}</option>
+                                            @empty
+
+                                            @endforelse
+                                        </select>
+                                        @error('brand')
+                                            <span class="text text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
                                 </div>
                             </form>
                         </div>

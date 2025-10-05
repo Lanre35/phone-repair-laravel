@@ -20,13 +20,13 @@ class RepairController extends Controller
     public function index()
     {
         $customers = Customer::where('id', '!=', null)->get();
-        $brands = Phone::all();
+        // $brands = Phone::all();
         $models = PhoneModel::all();
         $priorities = PriorityModel::all();
         $statuses = Status::all();
-        $repairs = Repair::with(['customer', 'phone', 'phoneModel', 'status', 'priority'])->get();
+        $repairs = Repair::with(['customer', 'model', 'status', 'priority'])->get();
         // dd();
-        return view('Repairs.index', compact('customers','brands','models', 'priorities', 'statuses', 'repairs'));
+        return view('Repairs.index', compact('customers','models', 'priorities', 'statuses', 'repairs'));
     }
 
     /**
@@ -45,7 +45,6 @@ class RepairController extends Controller
         $request->validate([
             'name' => 'required|exists:customers,id',
             'phone_number' => 'required|string|max:15',
-            'device_brand' => 'required|exists:phones,id',
             'device_model' => 'required|exists:phone_models,id',
             'issue' => 'required|string|max:255',
             'priority' => 'required|exists:priorities,id',
@@ -55,7 +54,6 @@ class RepairController extends Controller
         $save = Repair::query()->create([
            'customer_id' => $request->input('name'),
            'phone_number' => $request->input('phone_number'),
-           'device_brand_id' => $request->input('device_brand'),
            'device_model_id' => $request->input('device_model'),
            'priority_id' => $request->input('priority'),
            'status_id' => $request->input('status'),
@@ -73,7 +71,7 @@ class RepairController extends Controller
      */
     public function show(int $id)
     {
-    $repair = Repair::with(['customer', 'phone', 'phoneModel', 'priority', 'status'])->findOrFail($id);
+    $repair = Repair::with(['customer', 'model', 'priority', 'status'])->findOrFail($id);
     return view('Repairs.show', compact('repair'));
     }
 
@@ -82,7 +80,7 @@ class RepairController extends Controller
      */
     public function edit(int $id)
     {
-        $repair = Repair::with(['customer', 'phone', 'phoneModel', 'priority', 'status'])->findOrFail($id);
+        $repair = Repair::with(['customer', 'model', 'priority', 'status'])->findOrFail($id);
         return view('Repairs.edit', compact('repair'));
     }
 

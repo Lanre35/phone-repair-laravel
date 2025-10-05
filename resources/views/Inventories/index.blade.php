@@ -215,10 +215,10 @@
                                             </span>
                                         </td>
                                         <td>
-                                            <span class="text-success">${{ number_format($inventory->cost_price, 2) }}</span>
+                                            <span class="text-success">&#8358;{{ number_format($inventory->cost_price, 2) }}</span>
                                         </td>
                                         <td>
-                                            <span class="text-primary">${{ number_format($inventory->selling_price, 2) }}</span>
+                                            <span class="text-primary">&#8358;{{ number_format($inventory->selling_price, 2) }}</span>
                                         </td>
                                         <td>
                                             <a href="{{ route('inventories.edit', $inventory->id) }}" class="btn btn-sm btn-outline-primary me-1" title="Edit"><i class="bi bi-pencil"></i></a>

@@ -178,7 +178,7 @@
                                     <a class="dropdown-item text-primary bi bi-box-arrow-right" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __(key: 'Logout') }}
 
                                     </a>
 

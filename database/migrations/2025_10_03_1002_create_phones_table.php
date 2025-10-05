@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('phones', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('brand');
-            $table->unsignedBigInteger('model_id');
-            $table->foreign('model_id')->references('id')->on('phone_models')->onDelete('cascade');
             $table->timestamps();
         });
     }

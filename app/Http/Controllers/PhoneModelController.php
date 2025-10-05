@@ -13,8 +13,9 @@ class PhoneModelController extends Controller
      */
     public function index()
     {
+        $brands = Phone::all();
         $models = PhoneModel::all();
-        return view('addModel.phone-model',compact('models'));
+        return view('addModel.phone-model',compact('models','brands'));
     }
 
     /**
@@ -32,10 +33,15 @@ class PhoneModelController extends Controller
     {
         $credentials = $request->validate([
             'model' => 'required',
-            'model_number'=> 'required|alpha_dash'
+            'model_number'=> 'required|alpha_dash',
+            'brand' => 'required'
         ]);
 
-        PhoneModel::create($credentials);
+        PhoneModel::create([
+            'model' => $request->model,
+            'model_number' => $request->model_number,
+            'brand_id' => $request->brand
+        ]);
         return redirect()->route('add-phone-model.index')->with('success','Data Save Successful');
     }
 
@@ -44,7 +50,7 @@ class PhoneModelController extends Controller
      */
     public function show(string $id)
     {
-        
+
     }
 
     /**
