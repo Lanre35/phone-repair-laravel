@@ -49,6 +49,7 @@ class RepairController extends Controller
             'issue' => 'required|string|max:255',
             'priority' => 'required|exists:priorities,id',
             'status' => 'required|exists:statuses,id',
+            // 'pickup_date' => 'required|date',
         ]);
 
         $save = Repair::query()->create([
@@ -98,6 +99,7 @@ class RepairController extends Controller
             'repair_date' => 'required|date',
             'completion_date' => 'required|date',
             'notes' => 'required|string',
+            'pickup_date' => 'required|date',
         ]);
 
         $repair = Repair::findOrFail($id);

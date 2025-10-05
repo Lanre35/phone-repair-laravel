@@ -70,6 +70,10 @@
                                     <input type="date" name="completion_date" id="completion_date" class="form-control" value="{{ $repair->completion_date }}">
                                 </div>
                                 <div class="mb-3">
+                                    <label for="pickup_date" class="form-label">Pick Up Date</label>
+                                    <input type="date" name="pickup_date" id="pickup_date" class="form-control" value="{{ $repair->pickup_date }}">
+                                </div>
+                                <div class="mb-3">
                                     <label for="notes" class="form-label">Notes</label>
                                     <textarea name="notes" id="notes" class="form-control">{{ $repair->notes }}</textarea>
                                 </div>

@@ -27,12 +27,14 @@ class Repair extends Model
         'final_cost',
         'repair_date',
         'completion_date',
+        'pickup_date',
         'notes'
     ];
 
     protected $casts = [
         'repair_date' => 'date',
         'completion_date' => 'date',
+        'pickup_date' => 'date',
         'estimated_cost' => 'decimal:2',
         'final_cost' => 'decimal:2',
     ];

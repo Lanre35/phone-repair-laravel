@@ -21,6 +21,7 @@ class DashboardController extends Controller
     $completedStatus = Status::where('name', 'completed')->pluck('id')->first();
     $pendingPickupStatus = Status::where('name', ['Pending pickup'])->pluck('id')->first();
     $picked = Status::where('name', 'picked up')->pluck('id')->first();
+    // dd($picked);
         // dd($activeStatuses, $completedStatus, $pendingPickupStatus);
 
         $stats = [
@@ -34,9 +35,11 @@ class DashboardController extends Controller
             'daily_revenue' => Repair::where('status_id', $completedStatus)
                 ->whereDate('completion_date', today())
                 ->sum('final_cost') ?? 0,
-            'pick_up' => Repair::where('status_id', $picked)->whereDate('pickup_date', today())->count(),
+            'pick_up' => Repair::where('status_id', $picked)
+                ->whereDate('pickup_date', today())
+                ->count(),
         ];
-        // dd($stats['pending_pickup']);
+        // dd($stats);
 
         $recent_repairs = Repair::with('customer')
             ->latest()
@@ -59,8 +62,8 @@ class DashboardController extends Controller
             ->take(10)
             ->get();
 
-
-        return view('dashboard', compact('stats', 'recent_repairs'));
+        // dd($stats, $recent_repairs, $completed_repairs, $pending_pickup_repairs, $picked_repairs);
+        return view('dashboard', compact('stats', 'recent_repairs', 'completed_repairs', 'pending_pickup_repairs', 'picked_repairs'));
 
 
     }
