@@ -19,7 +19,6 @@ return new class extends Migration
             $table->unsignedBigInteger('brand_id');
             $table->timestamps();
 
-            // $table->foreignIdFor(Phone::class)->constrained()->onDelete('cascade');
             $table->foreign('brand_id')->references('id')->on('phones')->onDelete('cascade');
         });
     }
