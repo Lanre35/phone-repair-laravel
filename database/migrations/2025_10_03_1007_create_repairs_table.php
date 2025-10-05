@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('ticket_number')->unique();
             $table->foreignId('customer_id')->constrained()->onDelete('cascade');
             $table->string('phone_number');
-            // $table->foreignId('device_brand_id')->constrained('phones')->onDelete('cascade');
             $table->foreignId('device_model_id')->constrained('phone_models')->onDelete('cascade');
             $table->text('issue_description');
             $table->foreignId('status_id')->constrained('statuses')->onDelete('cascade');
