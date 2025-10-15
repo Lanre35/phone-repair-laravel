@@ -1,35 +1,9 @@
 @extends('layouts.app')
 @section('content')
 <div class="container-fluid">
-
-     @if(session('success'))
-        <div aria-live="polite" aria-atomic="true" class="position-fixed top-0 start-50 translate-middle-x p-3" style="z-index: 1080;">
-            <div class="toast align-items-center text-bg-success border-0 show" id="successToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="2500">
-                <div class="d-flex">
-                    <div class="toast-body">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current me-2" fill="none" viewBox="0 0 24 24" style="width:1.5em;height:1.5em;vertical-align:middle;">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span>{{ session('success') }}</span>
-                    </div>
-                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-            </div>
-        </div>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                var toastEl = document.getElementById('successToast');
-                if (toastEl) {
-                    var toast = new bootstrap.Toast(toastEl, { delay: 2500 });
-                    toast.show();
-                }
-            });
-        </script>
-    @endif
-
     <div class="row">
         <!-- Sidebar -->
-        <div class="col-md-3 p-0">
+        {{-- <div class="col-md-3 p-0">
             <nav class="bg-white shadow h-100 sidebar d-flex flex-column" style="min-height: 100vh;">
                 <div class="p-4 border-bottom">
                     <a href="{{ route('dashboard') }}" class="btn btn-outline-primary w-100 mb-3">
@@ -55,7 +29,9 @@
                     </li>
                 </ul>
             </nav>
-        </div>
+        </div> --}}
+
+        @include('layouts.partial-nav')
 
         <!-- Main Content -->
         <div class="col-md-9">

@@ -15,7 +15,7 @@ class PhoneController extends Controller
      */
     public function index()
     {
-        $brands = Phone::all();
+        $brands = Phone::simplePaginate(3);
         return view('phones.add-phone-name',compact('brands'));
     }
 

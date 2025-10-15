@@ -51,4 +51,9 @@ Route::controller(RepairController::class)->middleware('auth')->group(function (
     Route::resource('repairs', RepairController::class);
     Route::get('show/{id}', [RepairController::class, 'show']);
     Route::get('edit/{id}', [RepairController::class, 'edit']);
+    Route::get('repairs/restore/{id}', [RepairController::class, 'restore'])->name('repairs.restore');
 });
+
+Route::get('search-by-ticket', [RepairController::class, 'searchByTicket'])->name('search.by.ticket')->middleware('auth');
+Route::get('search-by-status', [RepairController::class, 'searchByStatus'])->name('search.by.status')->middleware('auth');
+

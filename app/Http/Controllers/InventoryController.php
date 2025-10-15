@@ -1,7 +1,8 @@
 <?php
-
+declare(strict_types=1);
 namespace App\Http\Controllers;
 
+use App\Http\Requests\InventoryValRequest;
 use App\Models\Product;
 use App\Models\Inventory;
 use Illuminate\Http\Request;
@@ -29,20 +30,9 @@ class InventoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(InventoryValRequest $request)
     {
-        $validation = $request->validate([
-            'part_name' => 'required|string|max:255',
-            'skuId' => 'required|string|max:100|unique:inventories,skuId',
-            'categoryId' => 'required|nullable|string|max:100',
-            'stock_quantity' => 'required|integer|min:0',
-            'cost_price' => 'required|numeric|min:0',
-            'selling_price' => 'required|numeric|min:0',
-            'min_stock' => 'nullable|integer|min:0',
-            'description' => 'nullable|string'
-        ]);
-
-        Inventory::create($validation);
+        Inventory::create($request->validated());
         return redirect()->back()->with('success', 'Inventory item added successfully!');
     }
 
@@ -66,20 +56,11 @@ class InventoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Inventory $inventory)
+    public function update(InventoryValRequest $request, Inventory $inventory)
     {
-        $validation = $request->validate([
-            'part_name' => 'required|string|max:255',
-            'skuId' => 'required|string|max:100|unique:inventories,skuId,'.$inventory->id,
-            'categoryId' => 'required|nullable|string|max:100',
-            'stock_quantity' => 'required|integer|min:0',
-            'cost_price' => 'required|numeric|min:0',
-            'selling_price' => 'required|numeric|min:0',
-            'min_stock' => 'nullable|integer|min:0',
-            'description' => 'nullable|string'
-        ]);
 
-        $inventory->update($validation);
+        $validated = $request->validate($request->updateRules($inventory));
+        $inventory->update($validated);
         return redirect()->route('inventories.index')->with('success', 'Inventory item updated successfully!');
     }
 

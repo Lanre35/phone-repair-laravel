@@ -38,5 +38,5 @@ class LoginController extends Controller
         $this->middleware('auth')->only('logout');
     }
 
-    
+
 }

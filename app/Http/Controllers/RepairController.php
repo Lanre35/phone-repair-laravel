@@ -8,19 +8,20 @@ use App\Models\Status;
 use App\Enums\Priority;
 use App\Models\Customer;
 use App\Models\PhoneModel;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use App\Models\PriorityModel;
 use Illuminate\Support\Facades\DB;
 
 class RepairController extends Controller
 {
+    use SoftDeletes;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $customers = Customer::where('id', '!=', null)->get();
-        // $brands = Phone::all();
         $models = PhoneModel::all();
         $priorities = PriorityModel::all();
         $statuses = Status::all();
@@ -111,9 +112,22 @@ class RepairController extends Controller
 
     public function searchByTicket(Request $request)
     {
-        $search = Repair::where('ticket_number',$request->search)->select('ticket_number','phone_number');
+        $search = Repair::where('ticket_number',$request->search)->select('ticket_number','phone_number')->first();
         return response()->json($search);
     }
+
+    // public function searchByStatus(Request $request)
+    // {
+    //     $status = $request->input('selected_status');
+
+    //     $repairs = Repair::with(['customer', 'model', 'status', 'priority'])
+    //         ->when($status, function ($query, $status) {
+    //             return $query->where('status_id', $status);
+    //         })
+    //         ->get();
+    //         // dd($status);
+    //     return response()->json($repairs);
+    // }
 
     /**
      * Remove the specified resource from storage.
@@ -125,4 +139,15 @@ class RepairController extends Controller
 
         return redirect()->route('repairs.index')->with('success', 'Repair deleted successfully.');
     }
+
+    public function restore($id)
+    {
+        $repair = Repair::withTrashed()->findOrFail($id);
+        if ($repair->trashed()) {
+            $repair->restore();
+            return redirect()->route('repairs.index')->with('success', 'Repair restored successfully.');
+        }
+        return redirect()->route('repairs.index')->with('info', 'Repair is not deleted.');
+    }
 }
+

@@ -43,7 +43,7 @@
                                 <label for="categoryId" class="form-label fw-semibold">Category</label>
                                 <div class="input-group">
                                     <span class="input-group-text bg-light"><i class="bi bi-tags"></i></span>
-                                    <select style="cursor: not-allowed;" class="form-select" id="categoryId" name="categoryId" required>
+                                    <select disabled style="cursor: not-allowed;" class="form-select" id="categoryId" name="categoryId" required>
                                         <option value="">Select Category</option>
                                         @foreach($products as $product)
                                             <option value="{{ $product->id }}" {{ $inventory->categoryId == $product->id ? 'selected' : '' }}>
@@ -83,16 +83,6 @@
                                     <input type="number" class="form-control" id="selling_price" name="selling_price" step="0.01" value="{{ old('selling_price', $inventory->selling_price) }}" required>
                                 </div>
                                 @error('selling_price')
-                                    <span class="text-danger small">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            <div class="col-md-6">
-                                <label for="min_stock" class="form-label fw-semibold">Minimum Stock</label>
-                                <div class="input-group">
-                                    <span class="input-group-text bg-light"><i class="bi bi-exclamation-triangle"></i></span>
-                                    <input type="number" class="form-control" id="min_stock" name="min_stock" value="{{ old('min_stock', $inventory->min_stock) }}">
-                                </div>
-                                @error('min_stock')
                                     <span class="text-danger small">{{ $message }}</span>
                                 @enderror
                             </div>

@@ -14,7 +14,8 @@ class PriorityController extends Controller
      */
     public function index()
     {
-        //
+        $priorities = PriorityModel::simplePaginate(2);
+        return view('settings.priority', compact('priorities'));
     }
 
     /**
@@ -85,6 +86,12 @@ class PriorityController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $priority = PriorityModel::find($id);
+        if ($priority) {
+            $priority->delete();
+            return redirect()->back()->with('success', 'Priority deleted successfully.');
+        } else {
+            return redirect()->back()->with('error', 'Priority not found.');
+        }
     }
 }

@@ -17,12 +17,17 @@ class DashboardController extends Controller
 
     public function index()
     {
-    $activeStatuses = Status::whereIn('name', ['pending', 'In progress', 'new'])->pluck('id');
-    $completedStatus = Status::where('name', 'completed')->pluck('id')->first();
-    $pendingPickupStatus = Status::where('name', ['Pending pickup'])->pluck('id')->first();
-    $picked = Status::where('name', 'picked up')->pluck('id')->first();
-    // dd($picked);
-        // dd($activeStatuses, $completedStatus, $pendingPickupStatus);
+        $activeStatuses = Status::whereIn('name', ['pending', 'In progress', 'new'])
+            ->pluck('id');
+        $completedStatus = Status::where('name', 'completed')
+            ->pluck('id')
+            ->first();
+        $pendingPickupStatus = Status::whereIn('name', ['Pending pickup'])
+            ->pluck('id')
+            ->first();
+        $picked = Status::where('name', 'picked up')
+            ->pluck('id')
+            ->first();
 
         $stats = [
             'active_repairs' => Repair::whereIn('status_id', $activeStatuses)->count(),
@@ -44,12 +49,12 @@ class DashboardController extends Controller
         $recent_repairs = Repair::with('customer')
             ->latest()
             ->take(10)
-            ->get();
+            ->simplePaginate(2);
         $completed_repairs = Repair::with('customer')
             ->where('status_id', $completedStatus)
             ->latest()
             ->take(10)
-            ->get();
+            ->simplePaginate(2);
 
         $pending_pickup_repairs = Repair::with('customer')
             ->where('status_id', $pendingPickupStatus)
@@ -64,7 +69,7 @@ class DashboardController extends Controller
 
         // dd($stats, $recent_repairs, $completed_repairs, $pending_pickup_repairs, $picked_repairs);
         return view('dashboard', compact('stats', 'recent_repairs', 'completed_repairs', 'pending_pickup_repairs', 'picked_repairs'));
-
+        
 
     }
 }

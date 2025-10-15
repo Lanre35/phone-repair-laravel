@@ -2,7 +2,8 @@
 @section('content')
     <div class="container-fluid">
      <div class="row">
-         <div class="col-md-3 p-0">
+
+        {{-- <div class="col-md-3 p-0">
             <nav class="bg-white shadow h-100 sidebar d-flex flex-column" style="min-height: 100vh;">
                 <div class="p-4 border-bottom">
                     <a href="{{ route('dashboard') }}" class="btn btn-outline-primary w-100 mb-3">
@@ -12,7 +13,7 @@
                 </div>
                 <ul class="nav flex-column p-3">
                     <li class="nav-item mb-2">
-                        <a href="{{ route('add-phone-name.index') }}" class="nav-link active bg-primary text-white rounded">
+                        <a href="{{ route('add-phone-name.index') }}" class="nav-link text-dark">
                             <i class="bi bi-phone"></i> Brand
                         </a>
                     </li>
@@ -22,13 +23,15 @@
                         </a>
                     </li>
                     <li class="nav-item mb-2">
-                        <a href="{{ route('products.create') }}" class="nav-link text-dark">
+                        <a href="{{ route('products.index') }}" class="nav-link active bg-primary text-white rounded">
                             <i class="bi bi-box"></i> Products
                         </a>
                     </li>
                 </ul>
             </nav>
-        </div>
+        </div> --}}
+
+        @include('layouts.partial-nav')
 
          <div class="col-md-9">
             {{-- modal Action --}}
@@ -115,64 +118,12 @@
                     </div>
                 </div>
             </div>
-
-
-            <hr>
-               {{-- Status --}}
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2>Status</h2>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Status">
-                    <i class="bi bi-plus-circle"></i> New Status
-                </button>
+            <div class="card-footer text-center mt-3 d-flex justify-content-end">
+                @if ($brands->hasPages())
+                    {{ $brands->links() }}
+                @endif
             </div>
-
-            <div class="modal fade" id="Status" tabindex="-1">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header modal-primary">
-                            <h5 class="modal-title">Add New Status</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="status" action="{{ route('status.store') }}" method="POST">
-                                @csrf
-                                <div class="mb-3">
-                                    <label for="status" class="form-label">Status</label>
-                                    <input type="text" name="status" class="form-control" id="status">
-                                </div>
-                                @error('status')
-                                    <span class="text text-danger">{{ $message }}</span>
-                                @enderror
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button id="save" type="submit" class="btn btn-primary" form="status">Save</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {{-- <div class="card shadow">
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover" id="repairsTable">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Status</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Repairs will be populated here -->
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div> --}}
         </div>
      </div>
- </div>
+    </div>
 @endsection

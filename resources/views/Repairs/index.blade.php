@@ -5,46 +5,7 @@
 <div class="container-fluid">
     <div class="row">
         <!-- Sidebar -->
-        <div class="col-md-3 p-0">
-            <nav class="bg-gradient bg-light shadow h-100 sidebar d-flex flex-column" style="min-height: 100vh;">
-                <div class="p-4 border-bottom">
-                    <h5 class="text-primary fw-bold">Menu</h5>
-                </div>
-                <ul class="nav flex-column p-3 gap-2">
-                    <li class="nav-item">
-                        <a href="{{ route('dashboard') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('dashboard') ? 'active bg-primary text-white rounded' : 'text-dark' }}">
-                            <span class="me-2"><i class="bi bi-speedometer2"></i></span> Dashboard
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('repairs.index') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('repairs.index') ? 'active bg-primary text-white rounded' : 'text-dark' }}">
-                            <span class="me-2"><i class="bi bi-tools"></i></span> Repair Jobs
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('customers.index') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('customers.index') ? 'active bg-primary text-white rounded' : 'text-dark' }}">
-                            <span class="me-2"><i class="bi bi-people"></i></span> Customers
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('inventories.index') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('inventories.index') ? 'active bg-primary text-white rounded' : 'text-dark' }}">
-                            <span class="me-2"><i class="bi bi-box"></i></span> Inventory
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link d-flex align-items-center text-dark">
-                            <span class="me-2"><i class="bi bi-graph-up"></i></span> Reports
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('setting.index') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('setting.index') ? 'active bg-primary text-white rounded' : 'text-dark' }}">
-                            <span class="me-2"><i class="bi bi-gear"></i></span> Settings
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-
+        @include('layouts.nav')
         <!-- Main Content Area -->
         <div class="col-md-9">
             {{-- modal Action --}}
@@ -140,23 +101,30 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-3">
-                            <select class="form-select" id="statusFilter">
-                                <option value="">All Status</option>
-                                @foreach ($statuses as $status)
-                                    <option value="{{ $status->id }}">{{ $status->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-md-3">
+                        {{-- <div class="col-md-3">
+                            <form action="{{ route('search.by.status') }}" method="GET">
+                                @csrf
+                                <select name="selected_status" class="form-select" id="statusFilter" onchange="this.form.submit()">
+                                    <option value="">All Status</option>
+                                    @foreach ($statuses as $status)
+                                        <option value="{{ $status->id }}">{{ $status->name }}</option>
+                                    @endforeach
+                                </select>
+                            </form>
+                        </div> --}}
+                        {{-- <div class="col-md-3">
                             <input type="date" class="form-control" id="dateFilter">
-                        </div>
+                        </div> --}}
+
                         <div class="col-md-4">
-                            <input type="text" name="search" class="form-control" id="searchFilter" placeholder="Search customer or ticket...">
+                            <form id="searchForm" class="d-flex" method="GET" action="{{ route('search.by.ticket') }}">
+                                @csrf
+                                <input type="text" name="search" class="form-control  mx-2" id="searchFilter" placeholder="Search By ticket...">
+                            </form>
                         </div>
-                        <div class="col-md-2">
+                        {{-- <div class="col-md-2">
                             <button class="btn btn-outline-secondary" onclick="clearFilters()">Clear</button>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>

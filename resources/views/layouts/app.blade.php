@@ -110,7 +110,7 @@
                 }
             });
         </script>
-    @endif
+        @endif
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <i class="bi bi-phone"></i> {{ config('app.name', 'Phone Repair Manager') }}
@@ -144,13 +144,13 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a id="loginLink" class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a id="registerLink" class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
 
                                 <li class="nav-item">
@@ -159,10 +159,10 @@
                                     </button>
                                 </li>
                             @endif
-                        @else
+                            @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                                    {{ Auth::user()->name ?? 'User' }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -198,7 +198,9 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        {{-- @include('layouts.nav') --}}
+
+        <main id="main-content" class="py-4">
             @yield('content')
         </main>
     </div>
@@ -206,6 +208,7 @@
     <!-- Bootstrap JS -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

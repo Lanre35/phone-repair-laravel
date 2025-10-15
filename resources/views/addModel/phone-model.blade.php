@@ -1,37 +1,11 @@
 @extends('layouts.app')
 @section('content')
     <div class="container-fluid">
-     <div class="row">
-         <div class="col-md-3 p-0">
-            <nav class="bg-white shadow h-100 sidebar d-flex flex-column" style="min-height: 100vh;">
-                <div class="p-4 border-bottom">
-                    <a href="{{ route('dashboard') }}" class="btn btn-outline-primary w-100 mb-3">
-                        <i class="bi bi-arrow-left"></i> Back to Dashboard
-                    </a>
-                    <h5 class="text-primary">Settings</h5>
-                </div>
-                <ul class="nav flex-column p-3">
-                    <li class="nav-item mb-2">
-                        <a href="{{ route('add-phone-name.index') }}" class="nav-link text-dark">
-                            <i class="bi bi-phone"></i> Brand
-                        </a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a href="{{ route('add-phone-model.index') }}" class="nav-link active bg-primary text-white rounded">
-                            <i class="bi bi-phone"></i> Model
-                        </a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a href="{{ route('products.create') }}" class="nav-link text-dark">
-                            <i class="bi bi-box"></i> Products
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+        <div class="row">
+            @include('layouts.partial-nav')
 
-        <div class="col-md-9">
-            {{-- modal Action --}}
+            <div class="col-md-9">
+                {{-- modal Action --}}
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2>Phone Model</h2>
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#PhoneModel">
@@ -113,7 +87,7 @@
                                         <td><span class="badge bg-info text-dark">{{ $model->model }}</span></td>
                                         <td><span class="badge bg-secondary">{{ $model->model_number }}</span></td>
                                         <td>
-                                             <div class="btn-group" role="group">
+                                            <div class="btn-group" role="group">
                                                 <a href="#" class="btn btn-sm btn-info" title="View">
                                                     <i class="bi bi-eye"></i>
                                                 </a>
@@ -136,62 +110,11 @@
                     </div>
                 </div>
             </div>
-
-            <hr>
-            {{-- Priority --}}
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2>Priority</h2>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#Priority">
-                    <i class="bi bi-plus-circle"></i> New Priority
-                </button>
+            <div class="card-footer text-center mt-3 d-flex justify-content-end">
+                @if ($models->hasPages())
+                    {{ $models->links() }}
+                @endif
             </div>
-
-            <div class="modal fade" id="Priority" tabindex="-1">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header modal-primary">
-                            <h5 class="modal-title">Add New Model</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="priority" action="{{ route('priority.store') }}" method="POST">
-                                @csrf
-                                <div class="mb-3">
-                                    <label for="model" class="form-label">Priority</label>
-                                    <input type="text" name="priority" class="form-control" id="model">
-                                </div>
-                                @error('priority')
-                                    <span class="text text-danger">{{ $message }}</span>
-                                @enderror
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button id="save" type="submit" class="btn btn-primary" form="priority">Save</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-             {{-- <div class="card shadow">
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover" id="repairsTable">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Priority</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Repairs will be populated here -->
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div> --}}
         </div>
     </div>
 @endsection

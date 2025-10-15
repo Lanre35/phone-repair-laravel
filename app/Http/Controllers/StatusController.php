@@ -14,7 +14,9 @@ class StatusController extends Controller
      */
     public function index()
     {
-        //
+
+        $statuses = Status::simplePaginate(3);
+        return view('settings.status', compact('statuses'));
     }
 
     /**
@@ -94,6 +96,7 @@ class StatusController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        status::find($id)->delete();
+        return redirect()->back()->with('success', 'Status deleted successfully.');
     }
 }

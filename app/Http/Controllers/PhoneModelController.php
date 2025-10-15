@@ -14,7 +14,7 @@ class PhoneModelController extends Controller
     public function index()
     {
         $brands = Phone::all();
-        $models = PhoneModel::all();
+        $models = PhoneModel::simplePaginate(2);
         return view('addModel.phone-model',compact('models','brands'));
     }
 
@@ -74,6 +74,7 @@ class PhoneModelController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        PhoneModel::find($id)->delete();
+        return redirect()->route('add-phone-model.index')->with('success','Data Delete Successful');
     }
 }

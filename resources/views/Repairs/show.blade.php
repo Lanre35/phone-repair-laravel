@@ -9,7 +9,7 @@
                         <img src="https://ui-avatars.com/api/?name={{ urlencode($repair->customer->name ?? 'Customer') }}&background=0D8ABC&color=fff&size=128" class="rounded-circle mb-3" alt="Customer Avatar">
                         <h4 class="mb-1">{{ $repair->customer->name ?? '-' }}</h4>
                         <span class="badge bg-primary mb-2">{{ $repair->status->name ?? '-' }}</span>
-                        <p class="text-muted small">Ticket #: {{ $repair->ticket_number }}</p>
+                        <p class="text-muted small text-center mb-1">Ticket #: {{ $repair->ticket_number }}</p>
                         <a href="{{ route('repairs.edit', $repair->id) }}" class="btn btn-warning btn-sm mb-2">Edit</a>
                         <a href="{{ route('repairs.index') }}" class="btn btn-secondary btn-sm">Back</a>
 

@@ -20,7 +20,7 @@
                             <img src="https://ui-avatars.com/api/?name={{ urlencode($repair->customer->name ?? 'Customer') }}&background=0D8ABC&color=fff&size=96" class="rounded-circle border-3 border-white shadow mb-2" alt="Customer Avatar">
                             <h4 class="mb-1">{{ $repair->customer->name ?? '-' }}</h4>
                             <span class="badge bg-primary mb-2">{{ $repair->status->name ?? '-' }}</span>
-                            <p class="text-muted small mb-1">Ticket #: {{ $repair->ticket_number }}</p>
+                            <p class="text-muted small mb-1 text-center">Ticket #: {{ $repair->ticket_number }}</p>
                             <a href="{{ route('repairs.show', $repair->id) }}" class="btn btn-info btn-sm mb-2">View</a>
                             <a href="{{ route('repairs.index') }}" class="btn btn-secondary btn-sm">Back</a>
                         </div>
