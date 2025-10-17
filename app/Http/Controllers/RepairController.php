@@ -25,7 +25,7 @@ class RepairController extends Controller
         $models = PhoneModel::all();
         $priorities = PriorityModel::all();
         $statuses = Status::all();
-        $repairs = Repair::with(['customer', 'model', 'status', 'priority'])->get();
+        $repairs = Repair::with(['customer', 'model', 'status', 'priority'])->simplePaginate(5);
         // dd();
         return view('Repairs.index', compact('customers','models', 'priorities', 'statuses', 'repairs'));
     }

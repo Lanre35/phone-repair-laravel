@@ -10,8 +10,8 @@
         <div class="col-md-9">
             {{-- modal Action --}}
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2>Repair Jobs</h2>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addRepairModal">
+                <h2 class="mt-2">Repair Jobs</h2>
+                <button class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#addRepairModal">
                     <i class="bi bi-plus-circle"></i> New Repair Job
                 </button>
             </div>
@@ -112,11 +112,11 @@
                                 </select>
                             </form>
                         </div> --}}
-                        {{-- <div class="col-md-3">
-                            <input type="date" class="form-control" id="dateFilter">
-                        </div> --}}
+                        <div class="col-md-6 mb-2">
+                            <input type="date" class="form-control" id="dateFilter" disabled>
+                        </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <form id="searchForm" class="d-flex" method="GET" action="{{ route('search.by.ticket') }}">
                                 @csrf
                                 <input type="text" name="search" class="form-control  mx-2" id="searchFilter" placeholder="Search By ticket...">
@@ -227,6 +227,9 @@
                         </table>
                     </div>
                 </div>
+            </div>
+            <div class="d-flex justify-content-end my-2">
+                {{ $repairs->links() }}
             </div>
         </div>
     </div>

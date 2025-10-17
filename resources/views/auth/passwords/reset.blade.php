@@ -1,3 +1,6 @@
+<?php
+    set_time_limit(60); // increases to 60 seconds
+?>
 @extends('layouts.app')
 
 @section('content')
