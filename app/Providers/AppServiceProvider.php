@@ -22,5 +22,6 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app['router']->pattern('id', '[0-9]+');
         Paginator::useBootstrapFive();
+        
     }
 }

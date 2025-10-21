@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Phone;
+use App\Models\Repair;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PhoneController;
@@ -13,7 +14,8 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\PhoneModelController;
-use App\Models\Repair;
+use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 
 Route::get('/', function () {
     return redirect()->route('dashboard');
@@ -40,9 +42,9 @@ Route::post('repairs/priority/{id}',[PriorityController::class,'update'])->middl
 Route::resource('products', ProductController::class)->middleware('auth');
 
 Route::controller(PhoneController::class)->middleware('auth')->group(function(){
-    Route::get('phones/{id}',[PhoneController::class,'show'])->name('phones.show');
-    Route::delete('phones/{id}',[PhoneController::class,'destroy'])->name('phones.destroy');
-    Route::get('phones/phone-edit/{id}',[PhoneController::class,'edit'])->name('phones.edit');
+    Route::get('phones/{id}',[PhoneController::class,'show'])->name('show');
+    Route::delete('phones/{id}',[PhoneController::class,'destroy'])->name('destroy');
+    Route::get('phones/phone-edit/{id}',[PhoneController::class,'edit'])->name('edit');
     Route::resource('phones',PhoneController::class);
     Route::resource('add-phone-name', PhoneController::class);
 });
@@ -52,13 +54,13 @@ Route::controller(RepairController::class)->middleware('auth')->group(function (
     Route::get('show/{id}', [RepairController::class, 'show']);
     Route::get('edit/{id}', [RepairController::class, 'edit']);
     Route::get('repairs/restore/{id}', [RepairController::class, 'restore'])->name('repairs.restore');
+    Route::get('search-by-ticket', [RepairController::class, 'searchByTicket'])->name('search.by.ticket');
 });
 
-Route::get('search-by-ticket', [RepairController::class, 'searchByTicket'])->name('search.by.ticket')->middleware('auth');
-Route::get('search-by-status', [RepairController::class, 'searchByStatus'])->name('search.by.status')->middleware('auth');
 
-Route::get('password/reset', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
-Route::post('password/email', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-Route::get('password/reset/{token}', [App\Http\Controllers\Auth\ResetPasswordController::class, 'showResetForm'])->name('password.reset');
-Route::post('password/reset', [App\Http\Controllers\Auth\ResetPasswordController::class, 'reset'])->name('password.update');
+
+Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 

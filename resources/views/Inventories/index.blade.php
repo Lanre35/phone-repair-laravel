@@ -76,14 +76,14 @@
                                 <div class="row g-3">
                                     <div class="col-12">
                                         <label for="partName" class="form-label">Part Name</label>
-                                        <input type="text" class="form-control" id="partName" name="part_name">
+                                        <input type="text" class="form-control" id="partName" name="part_name" required>
                                         @error('part_name')
                                             <span class="text text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                     <div class="col-md-6">
                                         <label for="partSKU" class="form-label">SKU</label>
-                                        <select class="form-select" id="partCategory" name="skuId">
+                                        <select class="form-select" id="partCategory" name="skuId" required>
                                             <option value="">Select Category</option>
                                             @forelse ($products as $product)
                                                 <option value="{{ $product->id }}">{{ $product->abbreviation }}</option>
@@ -97,7 +97,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label for="partCategory" class="form-label">Category</label>
-                                        <select class="form-select" id="partCategory" name="categoryId">
+                                        <select class="form-select" id="partCategory" name="categoryId" required>
                                             <option value="">Select Category</option>
                                             @forelse ($products as $product)
                                                 <option value="{{ $product->id }}">{{ $product->product }}</option>
@@ -112,21 +112,21 @@
 
                                     <div class="col-md-4">
                                         <label for="partStock" class="form-label">Stock Quantity</label>
-                                        <input type="number" class="form-control" id="partStock" name="stock_quantity">
+                                        <input type="number" class="form-control" id="partStock" name="stock_quantity" required>
                                          @error('stock_quantity')
                                             <span class="text text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                     <div class="col-md-4">
                                         <label for="partCost" class="form-label">Cost Price</label>
-                                        <input type="number" class="form-control" id="partCost" step="0.01" name="cost_price">
+                                        <input type="number" class="form-control" id="partCost" step="0.01" name="cost_price" required>
                                          @error('cost_price')
                                             <span class="text text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                     <div class="col-md-4">
                                         <label for="partPrice" class="form-label">Selling Price</label>
-                                        <input type="number" class="form-control" id="partPrice" step="0.01" name="selling_price">
+                                        <input type="number" class="form-control" id="partPrice" step="0.01" name="selling_price" required>
                                          @error('selling_price')
                                             <span class="text text-danger">{{ $message }}</span>
                                         @enderror

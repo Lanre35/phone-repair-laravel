@@ -87,30 +87,32 @@
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm">
-        @if(session('success'))
-        <div aria-live="polite" aria-atomic="true" class="position-fixed top-0 start-50 translate-middle-x p-1" style="z-index: 1080;">
-            <div class="toast align-items-center text-bg-success border-0 show" id="successToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="1000" style="font-size: 0.95rem width: 100%;">
-                <div class="d-flex">
-                    <div class="toast-body">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current me-2" fill="none" viewBox="0 0 24 24" style="width:1em;height:1em;vertical-align:middle;">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span>{{ session('success') }}</span>
+
+            @if(session('success'))
+                <div aria-live="polite" aria-atomic="true" class="position-fixed top-0 start-50 translate-middle-x p-1" style="z-index: 1080;">
+                    <div class="toast align-items-center text-bg-success border-0 show" id="successToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="1000" style="font-size: 0.95rem width: 100%;">
+                        <div class="d-flex">
+                            <div class="toast-body">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current me-2" fill="none" viewBox="0 0 24 24" style="width:1em;height:1em;vertical-align:middle;">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span>{{ session('success') }}</span>
+                            </div>
+                            {{-- <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button> --}}
+                        </div>
                     </div>
-                    {{-- <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button> --}}
                 </div>
-            </div>
-        </div>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                var toastEl = document.getElementById('successToast');
-                if (toastEl) {
-                    var toast = new bootstrap.Toast(toastEl, { delay: 1000 });
-                    toast.show();
-                }
-            });
-        </script>
-        @endif
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        var toastEl = document.getElementById('successToast');
+                        if (toastEl) {
+                            var toast = new bootstrap.Toast(toastEl, { delay: 1000 });
+                            toast.show();
+                        }
+                    });
+                </script>
+            @endif
+
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <i class="bi bi-phone"></i> {{ config('app.name', 'Phone Repair Manager') }}

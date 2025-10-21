@@ -21,10 +21,10 @@ class RepairController extends Controller
      */
     public function index()
     {
-        $customers = Customer::where('id', '!=', null)->get();
-        $models = PhoneModel::all();
-        $priorities = PriorityModel::all();
-        $statuses = Status::all();
+        $customers = Customer::with('repairs')->get();
+        $models = PhoneModel::with('phone')->get();
+        $priorities = PriorityModel::with('repairs')->get();
+        $statuses = Status::with('repairs')->get();
         $repairs = Repair::with(['customer', 'model', 'status', 'priority'])->simplePaginate(5);
         // dd();
         return view('Repairs.index', compact('customers','models', 'priorities', 'statuses', 'repairs'));

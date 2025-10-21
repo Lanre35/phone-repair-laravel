@@ -5,6 +5,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CustomerValRequest;
 use Illuminate\Http\Request;
 use App\Models\Customer;
 
@@ -35,16 +36,11 @@ class CustomerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CustomerValRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:customers',
-            'phone_number' => 'required|string|max:20',
-            'address' => 'nullable|string'
-        ]);
 
-        Customer::create($request->all());
+
+        Customer::create($request->validated());
 
         return redirect()->route('customers.index')
             ->with('success', 'Customer created successfully.');
@@ -71,17 +67,11 @@ class CustomerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Customer $customer)
+    public function update(CustomerValRequest $request, Customer $customer)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:customers,email,' . $customer->id,
-            'phone_number' => 'required|string|max:20',
-            'address' => 'nullable|string'
-        ]);
 
-        $customer->update($request->all());
 
+        $customer->update($request->validated());
         return redirect()->route('customers.index')
             ->with('success', 'Customer updated successfully.');
     }

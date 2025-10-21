@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\InventoryValRequest;
@@ -14,9 +16,9 @@ class InventoryController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-        $inventories = Inventory::all();
-        return view('Inventories.index',['products'=>$products, 'inventories'=>$inventories]);
+        $products = Product::with('inventories')->get();
+        $inventories = Inventory::with('product')->get();
+        return view('Inventories.index', ['products' => $products, 'inventories' => $inventories]);
     }
 
     /**
@@ -39,10 +41,7 @@ class InventoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Inventory $inventory)
-    {
-
-    }
+    public function show(Inventory $inventory) {}
 
     /**
      * Show the form for editing the specified resource.
@@ -58,10 +57,12 @@ class InventoryController extends Controller
      */
     public function update(InventoryValRequest $request, Inventory $inventory)
     {
-
         $validated = $request->validate($request->updateRules($inventory));
         $inventory->update($validated);
-        return redirect()->route('inventories.index')->with('success', 'Inventory item updated successfully!');
+        if($inventory){
+            return redirect()->route('inventories.index')->with('success', 'Inventory item updated successfully!');
+        }
+        return redirect()->back();
     }
 
     /**

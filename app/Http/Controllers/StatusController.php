@@ -15,7 +15,7 @@ class StatusController extends Controller
     public function index()
     {
 
-        $statuses = Status::simplePaginate(3);
+        $statuses = Status::where('id', '!=', 1)->simplePaginate(3);
         return view('settings.status', compact('statuses'));
     }
 
