@@ -36,7 +36,7 @@ class PriorityController extends Controller
         ]);
 
        $priority =  PriorityModel::create($validation);
-       return redirect()->route('add-phone-model.index');
+       return redirect()->route('priority.index');
     }
 
     /**

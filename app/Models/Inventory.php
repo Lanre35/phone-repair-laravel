@@ -15,7 +15,8 @@ class Inventory extends Model
         'cost_price',
         'selling_price',
         'min_stock',
-        'description'
+        'description',
+        'device_model_id'
     ];
 
     protected $casts = [
@@ -26,5 +27,10 @@ class Inventory extends Model
     public function product()
     {
         return $this->belongsTo(Product::class, 'categoryId');
+    }
+
+    public function model()
+    {
+        return $this->belongsTo(PhoneModel::class, 'device_model_id');
     }
 }

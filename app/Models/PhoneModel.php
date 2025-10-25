@@ -18,4 +18,9 @@ class PhoneModel extends Model
     {
         return $this->belongsTo(Phone::class, 'brand_id');
     }
+
+    public function inventories()
+    {
+        return $this->hasMany(Inventory::class, 'device_model_id');
+    }
 }

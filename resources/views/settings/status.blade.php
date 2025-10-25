@@ -59,7 +59,7 @@
                                             <form action="{{ route('status.destroy', $status->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm">
+                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure? Before deleted')" title="delete">
                                                     <i class="bi bi-trash"></i> Delete
                                                 </button>
                                             </form>

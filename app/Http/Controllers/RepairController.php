@@ -116,18 +116,15 @@ class RepairController extends Controller
         return response()->json($search);
     }
 
-    // public function searchByStatus(Request $request)
-    // {
-    //     $status = $request->input('selected_status');
 
-    //     $repairs = Repair::with(['customer', 'model', 'status', 'priority'])
-    //         ->when($status, function ($query, $status) {
-    //             return $query->where('status_id', $status);
-    //         })
-    //         ->get();
-    //         // dd($status);
-    //     return response()->json($repairs);
-    // }
+     public function searchByDate(Request $request)
+     {
+        $getDate = Repair::select('repair_date')
+            ->where('repair_date', $request->date)
+            ->get();
+            // dd($getDate->toArray());
+        return response()->json($getDate,200);
+     }
 
     /**
      * Remove the specified resource from storage.

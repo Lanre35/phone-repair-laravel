@@ -55,6 +55,7 @@ Route::controller(RepairController::class)->middleware('auth')->group(function (
     Route::get('edit/{id}', [RepairController::class, 'edit']);
     Route::get('repairs/restore/{id}', [RepairController::class, 'restore'])->name('repairs.restore');
     Route::get('search-by-ticket', [RepairController::class, 'searchByTicket'])->name('search.by.ticket');
+    Route::get('search-by-date',[RepairController::class,'searchByDate'])->name('search.by.date');
 });
 
 

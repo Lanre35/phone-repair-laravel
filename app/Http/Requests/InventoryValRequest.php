@@ -34,7 +34,8 @@ class InventoryValRequest extends FormRequest
             'cost_price' => 'required|numeric|min:0',
             'selling_price' => 'required|numeric|min:0',
             'min_stock' => 'nullable|integer|min:0',
-            'description' => 'nullable|string'
+            'description' => 'nullable|string',
+            'device_model_id' => 'required|exists:phone_models,id'
         ];
     }
 

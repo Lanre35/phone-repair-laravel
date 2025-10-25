@@ -10,6 +10,9 @@
         <div class="col-md-9">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2 class="fw-bold text-primary"><i class="bi bi-box-seam me-2"></i>Inventory</h2>
+                    <form action="">
+                        <input type="text" class="form form-control" name="search" placeholder="Search Inventory">
+                    </form>
                 <button type="button" class="btn btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#addPartModal">
                     <i class="bi bi-plus-circle"></i> Add Inventory
                 </button>
@@ -95,6 +98,7 @@
                                             <span class="text text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
+
                                     <div class="col-md-6">
                                         <label for="partCategory" class="form-label">Category</label>
                                         <select class="form-select" id="partCategory" name="categoryId" required>
@@ -131,6 +135,22 @@
                                             <span class="text text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
+
+                                    <div class="col-md-6">
+                                        <label for="deviceModel" class="form-label">Device Model</label>
+                                        <select class="form-select" id="deviceModel" name="device_model_id" required>
+                                            <option value="">Select Device Model</option>
+
+                                            @forelse ($models as $model)
+                                                <option value="{{ $model->id }}">{{ $model->model }}</option>
+                                            @empty
+                                                <p>No data found</p>
+                                            @endforelse
+                                        </select>
+                                        @error('device_model_id')
+                                            <span class="text text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -150,6 +170,7 @@
                             <thead class="table-light">
                                 <tr>
                                     <th><i class="bi bi-box"></i> Part Name</th>
+                                    <th><i class="bi bi-phone"></i> Model</th>
                                     <th><i class="bi bi-upc-scan"></i> SKU</th>
                                     <th><i class="bi bi-tags"></i> Category</th>
                                     <th><i class="bi bi-stack"></i> Stock</th>
@@ -164,6 +185,9 @@
                                     <tr>
                                         <td>
                                             <span class="fw-semibold"><i class="text-primary me-1"></i>{{ $inventory->part_name }}</span>
+                                        </td>
+                                        <td>
+                                            <span class="fw-semibold"><i class="text-primary me-1"></i>{{ $inventory->model->model }}</span>
                                         </td>
                                         <td>
                                             <span class="badge bg-secondary">{{ $inventory->product->abbreviation }}</span>

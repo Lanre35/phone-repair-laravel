@@ -53,7 +53,7 @@
                                 @foreach($customer->repairs as $repair)
                                     <tr>
                                         <td>{{ $repair->ticket_number }}</td>
-                                        <td>{{ $repair->phoneModel->model_number ?? 'N/A' }}</td>
+                                        <td>{{ $repair->model->model ?? 'N/A' }}</td>
                                         <td>{{ $repair->issue_description }}</td>
                                         <td><span class="badge bg-warning">{{ $repair->status->name ?? 'N/A' }}</span></td>
                                         <td>{{ $repair->final_cost }}</td>

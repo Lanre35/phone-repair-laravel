@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\InventoryValRequest;
 use App\Models\Product;
 use App\Models\Inventory;
+use App\Models\PhoneModel;
 use Illuminate\Http\Request;
+use App\Http\Requests\InventoryValRequest;
 
 class InventoryController extends Controller
 {
@@ -16,9 +17,10 @@ class InventoryController extends Controller
      */
     public function index()
     {
+        $models = PhoneModel::all();
         $products = Product::with('inventories')->get();
         $inventories = Inventory::with('product')->get();
-        return view('Inventories.index', ['products' => $products, 'inventories' => $inventories]);
+        return view('Inventories.index', compact('models','products','inventories'));
     }
 
     /**
@@ -34,6 +36,7 @@ class InventoryController extends Controller
      */
     public function store(InventoryValRequest $request)
     {
+
         Inventory::create($request->validated());
         return redirect()->back()->with('success', 'Inventory item added successfully!');
     }
@@ -48,8 +51,11 @@ class InventoryController extends Controller
      */
     public function edit(Inventory $inventory)
     {
-        $products = Product::all();
-        return view('Inventories.edit', compact('inventory', 'products'));
+        $phoneModels = PhoneModel::orderBy('model')->get();
+
+        $products = Product::orderBy('product')->get();
+        $inventories = Inventory::with(['product','model'])->get();
+        return view('Inventories.edit', compact('inventory', 'products', 'inventories'));
     }
 
     /**

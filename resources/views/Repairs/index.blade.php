@@ -112,8 +112,17 @@
                                 </select>
                             </form>
                         </div> --}}
-                        <div class="col-md-6 mb-2">
-                            <input type="date" class="form-control" id="dateFilter" disabled>
+                        <div class="col-md-4 mb-2">
+                            <form action="{{ route('search.by.date') }}" method="GET">
+                                @csrf
+                                <input name="date" type="date" class="form-control" id="dateFilter">
+                                {{-- <button>Search Date</button> --}}
+                            </form>
+
+                        </div>
+
+                        <div class="col-md-2">
+                            <button type="button" id="date" class="btn btn-primary">Repair date</button>
                         </div>
 
                         <div class="col-md-6">

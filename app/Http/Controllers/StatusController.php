@@ -40,7 +40,7 @@ class StatusController extends Controller
             'name' => $request->input('status'),
         ]);
 
-        return redirect()->route('add-phone-name.index')->with('success', 'Status added successfully.');
+        return redirect()->route('status.index')->with('success', 'Status added successfully.');
     }
 
     /**

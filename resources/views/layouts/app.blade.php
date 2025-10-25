@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,9 +15,11 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
 
     <!-- Custom CSS -->
     <style>
@@ -84,40 +87,42 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
+
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm">
 
-            @if(session('success'))
-                <div aria-live="polite" aria-atomic="true" class="position-fixed top-0 start-50 translate-middle-x p-1" style="z-index: 1080;">
-                    <div class="toast align-items-center text-bg-success border-0 show" id="successToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="1000" style="font-size: 0.95rem width: 100%;">
+            @if (session('success'))
+                <div aria-live="polite" aria-atomic="true" class="position-fixed top-0 start-50 translate-middle-x p-1"
+                    style="z-index: 1080;">
+                    <div class="toast align-items-center text-bg-success border-0 show" id="successToast" role="alert"
+                        aria-live="assertive" aria-atomic="true" data-bs-delay="1000"
+                        style="font-size: 0.95rem width: 100%;">
                         <div class="d-flex">
                             <div class="toast-body">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current me-2" fill="none" viewBox="0 0 24 24" style="width:1em;height:1em;vertical-align:middle;">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current me-2"
+                                    fill="none" viewBox="0 0 24 24"
+                                    style="width:1em;height:1em;vertical-align:middle;">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                                 <span>{{ session('success') }}</span>
                             </div>
-                            {{-- <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button> --}}
+
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                                aria-label="Close"></button>
                         </div>
                     </div>
                 </div>
-                <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                        var toastEl = document.getElementById('successToast');
-                        if (toastEl) {
-                            var toast = new bootstrap.Toast(toastEl, { delay: 1000 });
-                            toast.show();
-                        }
-                    });
-                </script>
             @endif
 
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <i class="bi bi-phone"></i> {{ config('app.name', 'Phone Repair Manager') }}
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -152,7 +157,8 @@
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a id="registerLink" class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a id="registerLink" class="nav-link"
+                                        href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
 
                                 <li class="nav-item">
@@ -161,9 +167,10 @@
                                     </button>
                                 </li>
                             @endif
-                            @else
+                        @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name ?? 'User' }}
                                 </a>
 
@@ -177,8 +184,9 @@
                                         <i class="bi bi-gear-fill text-primary"></i> Settings
                                     </a>
 
-                                    <a class="dropdown-item text-primary bi bi-box-arrow-right" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
+                                    <a class="dropdown-item text-primary bi bi-box-arrow-right"
+                                        href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __(key: 'Logout') }}
 
@@ -200,7 +208,7 @@
             </div>
         </nav>
 
-        {{-- @include('layouts.nav') --}}
+
 
         <main id="main-content" class="py-4">
             @yield('content')
@@ -209,12 +217,13 @@
 
     <!-- Bootstrap JS -->
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js">
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    @yield('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
 </body>
+
 </html>

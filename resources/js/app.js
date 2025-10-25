@@ -17,7 +17,7 @@ $(document).ready(function(){
 
     //     e.preventDefault();
     //     const searchValue = $('#searchFilter').val();
-        
+
     //     $.ajax({
     //         url: $('#searchForm').attr('action'),
     //         method: 'GET',
@@ -30,7 +30,7 @@ $(document).ready(function(){
     //             $('td').filter(function() {
     //                 return $(this).text().toLowerCase().startsWith(searchValue.toLowerCase());
     //             }).parent().show();
-                
+
     //         },
     //         error: function(xhr) {
     //             // Handle errors
@@ -51,12 +51,14 @@ $(document).ready(function(){
                 $('tbody').html(response.tableHtml);
                 // Handle the successful response
                 // Show rows that start with the search value
+
                 $('td').filter(function() {
                     return !$(this).text().toLowerCase().endsWith(searchValue.toLowerCase());
                 }).parent().hide();
                 $('td').filter(function() {
                     return $(this).text().toLowerCase().endsWith(searchValue.toLowerCase());
                 }).parent().show();
+
             },
             error: function(xhr) {
                 console.error('Search error:', xhr);
@@ -69,32 +71,44 @@ $(document).ready(function(){
         }
     });
 
-    // $('#statusFilter').on( function() {
-    //     const status = $(this).val();
 
-    //     $.ajax({
-    //         url: 'search-by-status',
-    //         method: 'GET',
-    //         data: { status: status },
-    //         success: function(response) {
-    //             $('tbody').each(function() {
-    //                 console.log($(this).html(response.tableHtml));
-    //             });
-    //             // Handle the successful response
-    //             // Show rows that match the selected status
-    //             $('td').filter(function() {
-    //                 return !$(this).text().toLowerCase().includes(status.toLowerCase());
-    //             }).parent().hide();
-    //             $('td').filter(function() {
-    //                 return $(this).text().toLowerCase().includes(status.toLowerCase());
-    //             }).parent().show();
-                
-    //         },
-    //         error: function(xhr) {
-    //             console.error('Search error:', xhr);
-    //         }
-    //     });
-        
-    // });
+
+    $('#date').on('click', function(e) {
+        e.preventDefault();
+        const dateValue = $('#dateFilter').val();
+
+        $.ajax({
+            url: '/search-by-date',
+            method: 'GET',
+            data: { date: dateValue },
+            success: function(response) {
+
+                $('tbody').html(response.tableHtml);
+                // Handle the successful response
+                // Show rows that match the date value
+                $('td').filter(function() {
+                    return !$(this).text().toLowerCase().includes(dateValue.toLowerCase());
+                }).parent().hide();
+                $('td').filter(function() {
+                    return $(this).text().toLowerCase().includes(dateValue.toLowerCase());
+                }).parent().show();
+
+                // console.log($('#datafilter').val())
+            },
+            error: function(xhr) {
+                console.error('Date search error:', xhr);
+            }
+        });
+    });
 });
 
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    var toastEl = document.getElementById('successToast');
+    if (toastEl) {
+        var toast = new bootstrap.Toast(toastEl, { delay: 1000 });
+        toast.show();
+    }
+});
