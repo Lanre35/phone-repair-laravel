@@ -180,33 +180,33 @@
                                             @method('PUT')
                                             <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
                                                 @foreach($statuses as $status)
-                                                    @if($repair->status_id == $status->id && empty($repair->completion_date))
-                                                        <option value="{{ $status->id }}" selected>Pending</option>
-                                                    @else
-                                                        <option value="{{ $status->id }}" {{ $repair->status_id == $status->id ? 'selected' : '' }}>
-                                                            {{ $status->name }}
-                                                        </option>
-                                                    @endif
+                                                @if($repair->status_id == $status->id && empty($repair->completion_date))
+                                                <option value="{{ $status->id }}" selected>Pending</option>
+                                                @else
+                                                <option value="{{ $status->id }}" {{ $repair->status_id == $status->id ? 'selected' : '' }}>
+                                                    {{ $status->name }}
+                                                </option>
+                                                @endif
                                                 @endforeach
                                             </select>
                                         </form>
                                         @if(!empty($repair->completion_date))
-                                            <span class="badge bg-success ms-2">Completed</span>
+                                        <span class="badge bg-success ms-2">Completed</span>
                                         @endif
                                     </td>
                                     {{-- <td>
                                         @if(isset($repair->priority))
-                                            <span class="badge bg-primary">{{ $repair->priority->priority ?? '' }}</span>
+                                        <span class="badge bg-primary">{{ $repair->priority->priority ?? '' }}</span>
                                         @else
-                                            <span class="text-muted">Default</span>
+                                        <span class="text-muted">Default</span>
                                         @endif
                                     </td> --}}
                                     <td><span class="badge bg-warning text-dark">{{ $repair->final_cost }}</span></td>
                                     <td>
                                         @if(!empty($repair->completion_date))
-                                            <span class="badge bg-secondary">{{ $repair->completion_date }}</span>
+                                        <span class="badge bg-secondary">{{ $repair->completion_date }}</span>
                                         @else
-                                            <span class="text-muted">N/A</span>
+                                        <span class="text-muted">N/A</span>
                                         @endif
                                     </td>
                                     <td>
@@ -230,10 +230,14 @@
                                 @empty
                                 <tr>
                                     <td colspan="10" class="text-center">No repairs found.</td>
+
                                 </tr>
                                 @endforelse
+
+
                             </tbody>
                         </table>
+                        <p colspan="10" class="text-center" id="noSearch" ></p>
                     </div>
                 </div>
             </div>

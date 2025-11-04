@@ -10,9 +10,9 @@
         <div class="col-md-9">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2 class="fw-bold text-primary"><i class="bi bi-box-seam me-2"></i>Inventory</h2>
-                    <form action="">
+                    {{-- <form action="">
                         <input type="text" class="form form-control" name="search" placeholder="Search Inventory">
-                    </form>
+                    </form> --}}
                 <button type="button" class="btn btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#addPartModal">
                     <i class="bi bi-plus-circle"></i> Add Inventory
                 </button>
@@ -138,7 +138,7 @@
 
                                     <div class="col-md-6">
                                         <label for="deviceModel" class="form-label">Device Model</label>
-                                        <select class="form-select" id="deviceModel" name="device_model_id" required>
+                                        <select class="form-select" id="deviceModel" name="device_model_id">
                                             <option value="">Select Device Model</option>
 
                                             @forelse ($models as $model)

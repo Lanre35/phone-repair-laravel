@@ -113,7 +113,9 @@ class RepairController extends Controller
     public function searchByTicket(Request $request)
     {
         $search = Repair::where('ticket_number',$request->search)->select('ticket_number','phone_number')->first();
-        return response()->json($search);
+        if($search){
+            return response()->json($search);
+        }
     }
 
 

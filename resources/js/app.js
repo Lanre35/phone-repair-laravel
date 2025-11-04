@@ -42,22 +42,35 @@ $(document).ready(function(){
     $('#searchFilter').on('input', function(e) {
         e.preventDefault();
         const searchValue = $(this).val();
+        const noSearch = $('#noSearch');
 
         $.ajax({
             url: $('#searchForm').attr('action'),
             method: 'GET',
             data: { search: searchValue },
             success: function(response) {
+
                 $('tbody').html(response.tableHtml);
+
+                // console.log($('tbody').html(response.tableHtml));
+
                 // Handle the successful response
                 // Show rows that start with the search value
 
                 $('td').filter(function() {
-                    return !$(this).text().toLowerCase().endsWith(searchValue.toLowerCase());
+                    if(!$(this).text().toLowerCase().endsWith(searchValue.toLowerCase())){
+                        return noSearch.text('No repairs found.');
+                    }
+                    noSearch.text('');
                 }).parent().hide();
                 $('td').filter(function() {
-                    return $(this).text().toLowerCase().endsWith(searchValue.toLowerCase());
+                    if($(this).text().toLowerCase().endsWith(searchValue.toLowerCase())){
+                        return noSearch.text(''); ;
+                    }
+
                 }).parent().show();
+                
+
 
             },
             error: function(xhr) {
