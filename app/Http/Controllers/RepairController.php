@@ -27,7 +27,7 @@ class RepairController extends Controller
         $statuses = Status::with('repairs')->get();
         $repairs = Repair::with(['customer', 'model', 'status', 'priority'])->simplePaginate(5);
         // dd();
-        return view('Repairs.index', compact('customers','models', 'priorities', 'statuses', 'repairs'));
+        return view('Repairs.index', compact('customers', 'models', 'priorities', 'statuses', 'repairs'));
     }
 
     /**
@@ -54,14 +54,14 @@ class RepairController extends Controller
         ]);
 
         $save = Repair::query()->create([
-           'customer_id' => $request->input('name'),
-           'phone_number' => $request->input('phone_number'),
-           'device_model_id' => $request->input('device_model'),
-           'priority_id' => $request->input('priority'),
-           'status_id' => $request->input('status'),
-           'issue_description' => $request->input('issue'),
+            'customer_id' => $request->input('name'),
+            'phone_number' => $request->input('phone_number'),
+            'device_model_id' => $request->input('device_model'),
+            'priority_id' => $request->input('priority'),
+            'status_id' => $request->input('status'),
+            'issue_description' => $request->input('issue'),
         ]);
-        if($save){
+        if ($save) {
             return redirect()->back()->with('success', 'Repair created successfully.');
         } else {
             return redirect()->back()->with('error', 'Failed to create repair ticket.');
@@ -73,8 +73,8 @@ class RepairController extends Controller
      */
     public function show(int $id)
     {
-    $repair = Repair::with(['customer', 'model', 'priority', 'status'])->findOrFail($id);
-    return view('Repairs.show', compact('repair'));
+        $repair = Repair::with(['customer', 'model', 'priority', 'status'])->findOrFail($id);
+        return view('Repairs.show', compact('repair'));
     }
 
     /**
@@ -99,8 +99,8 @@ class RepairController extends Controller
             'final_cost' => 'required|numeric',
             'repair_date' => 'required|date',
             'completion_date' => 'required|date',
-            'notes' => 'required|string',
-            'pickup_date' => 'required|date',
+            'notes' => 'string',
+            'pickup_date' => 'nullable|date',
         ]);
 
         $repair = Repair::findOrFail($id);
@@ -112,21 +112,21 @@ class RepairController extends Controller
 
     public function searchByTicket(Request $request)
     {
-        $search = Repair::where('ticket_number',$request->search)->select('ticket_number','phone_number')->first();
-        if($search){
+        $search = Repair::where('ticket_number', $request->search)->select('ticket_number', 'phone_number')->first();
+        if ($search) {
             return response()->json($search);
         }
     }
 
 
-     public function searchByDate(Request $request)
-     {
+    public function searchByDate(Request $request)
+    {
         $getDate = Repair::select('repair_date')
             ->where('repair_date', $request->date)
             ->get();
-            // dd($getDate->toArray());
-        return response()->json($getDate,200);
-     }
+        // dd($getDate->toArray());
+        return response()->json($getDate, 200);
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -149,4 +149,3 @@ class RepairController extends Controller
         return redirect()->route('repairs.index')->with('info', 'Repair is not deleted.');
     }
 }
-

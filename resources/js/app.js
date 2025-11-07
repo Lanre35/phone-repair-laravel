@@ -15,29 +15,7 @@ $(document).ready(function(){
         $('body').toggleClass('bg-dark text-white');
     });
 
-    //     e.preventDefault();
-    //     const searchValue = $('#searchFilter').val();
 
-    //     $.ajax({
-    //         url: $('#searchForm').attr('action'),
-    //         method: 'GET',
-    //         data: { search: searchValue },
-    //         success: function(response) {
-    //             // Handle the successful response
-    //             $('td').filter(function() {
-    //                 return $(this).text().toLowerCase().startsWith(searchValue.toLowerCase());
-    //             }).parent().hide();
-    //             $('td').filter(function() {
-    //                 return $(this).text().toLowerCase().startsWith(searchValue.toLowerCase());
-    //             }).parent().show();
-
-    //         },
-    //         error: function(xhr) {
-    //             // Handle errors
-    //             console.error('Search error:', xhr);
-    //         }
-    //     });
-    // });
 
     $('#searchFilter').on('input', function(e) {
         e.preventDefault();
@@ -69,7 +47,7 @@ $(document).ready(function(){
                     }
 
                 }).parent().show();
-                
+
 
 
             },
@@ -100,13 +78,17 @@ $(document).ready(function(){
                 // Handle the successful response
                 // Show rows that match the date value
                 $('td').filter(function() {
-                    return !$(this).text().toLowerCase().includes(dateValue.toLowerCase());
+                    if(!$(this).text().toLowerCase().includes(dateValue.toLowerCase())){
+                        return $('#noSearch').text('No repairs found for this date.');
+                    }
+                    $('#noSearch').text('');
                 }).parent().hide();
                 $('td').filter(function() {
-                    return $(this).text().toLowerCase().includes(dateValue.toLowerCase());
-                }).parent().show();
+                    if($(this).text().toLowerCase().includes(dateValue.toLowerCase())){
+                        return $('#noSearch').text(''); ;
+                    }
 
-                // console.log($('#datafilter').val())
+                }).parent().show();
             },
             error: function(xhr) {
                 console.error('Date search error:', xhr);
