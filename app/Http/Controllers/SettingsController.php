@@ -19,19 +19,8 @@ class SettingsController extends Controller
     public function index()
     {
         Gate::authorize('setting');
-        
-        $roles = Roles::cases();
 
-        // Build a permissions list using Gate to avoid calling user->can() directly
-        $permissions = [
-            'create' => Gate::allows('create', Repair::class),
-            'view'   => Gate::allows('view', Repair::class),
-            'update' => Gate::allows('update', Repair::class),
-            'delete' => Gate::allows('delete', Repair::class),
-        ];
-
-
-        return view('settings.setting', compact('roles', 'permissions'));
+        return view('settings.setting');
         // return view('settings.setting', compact('roles', 'permissions'));
     }
 
