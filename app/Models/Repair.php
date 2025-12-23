@@ -10,9 +10,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Repair extends Model
 {
     use HasFactory;
+    use HasFactory;
     use SoftDeletes;
     protected $table = 'repairs';
-
     protected $fillable = [
         'ticket_number',
         'customer_id',
@@ -28,7 +28,8 @@ class Repair extends Model
         'repair_date',
         'completion_date',
         'pickup_date',
-        'notes'
+        'notes',
+        'user_id',
     ];
 
     protected $casts = [
@@ -57,6 +58,11 @@ class Repair extends Model
     public function priority()
     {
         return $this->belongsTo(PriorityModel::class, 'priority_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
 

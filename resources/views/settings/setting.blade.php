@@ -1,6 +1,12 @@
 @extends('layouts.app')
+
 @section('content')
- <!-- Sidebar -->
-@include('layouts.partial-nav')
- <!-- Main Content -->
+    <div class="container-fluid py-4">
+        <div class="row">
+            @include('layouts.partial-nav')
+
+           
+        </div>
+    </div>
 @endsection
+

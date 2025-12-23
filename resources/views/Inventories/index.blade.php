@@ -8,6 +8,11 @@
 
         <!-- Main Content -->
         <div class="col-md-9">
+            @if(session('error'))
+                <div class="alert alert-danger m-3">
+                    {{ session('error') }}
+                </div>
+              @endif
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2 class="fw-bold text-primary"><i class="bi bi-box-seam me-2"></i>Inventory</h2>
                     {{-- <form action="">
@@ -87,7 +92,7 @@
                                     <div class="col-md-6">
                                         <label for="partSKU" class="form-label">SKU</label>
                                         <select class="form-select" id="partCategory" name="skuId" required>
-                                            <option value="">Select Category</option>
+                                            <option value="">Select Skuid</option>
                                             @forelse ($products as $product)
                                                 <option value="{{ $product->id }}">{{ $product->abbreviation }}</option>
                                             @empty
@@ -207,12 +212,14 @@
                                             <span class="text-primary">&#8358;{{ number_format($inventory->selling_price, 2) }}</span>
                                         </td>
                                         <td>
+                                            @can('edit',$inventory)
                                             <a href="{{ route('inventories.edit', $inventory->id) }}" class="btn btn-sm btn-outline-primary me-1" title="Edit"><i class="bi bi-pencil"></i></a>
                                             <form action="{{ route('inventories.destroy', $inventory->id) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete" onclick="return confirm('Are you sure you want to delete this item?');"><i class="bi bi-trash"></i></button>
                                             </form>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @empty

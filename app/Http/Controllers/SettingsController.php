@@ -2,6 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Repair;
+use App\Models\User;
+use App\Models\Role;
+use App\Policies\RepairPolicy;
+use App\Role\Roles;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 
 class SettingsController extends Controller
@@ -11,7 +18,21 @@ class SettingsController extends Controller
      */
     public function index()
     {
-        return view('settings.setting');
+        Gate::authorize('setting');
+        
+        $roles = Roles::cases();
+
+        // Build a permissions list using Gate to avoid calling user->can() directly
+        $permissions = [
+            'create' => Gate::allows('create', Repair::class),
+            'view'   => Gate::allows('view', Repair::class),
+            'update' => Gate::allows('update', Repair::class),
+            'delete' => Gate::allows('delete', Repair::class),
+        ];
+
+
+        return view('settings.setting', compact('roles', 'permissions'));
+        // return view('settings.setting', compact('roles', 'permissions'));
     }
 
     /**

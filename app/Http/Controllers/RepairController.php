@@ -5,17 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Phone;
 use App\Models\Repair;
 use App\Models\Status;
-use App\Enums\Priority;
 use App\Models\Customer;
 use App\Models\PhoneModel;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use App\Models\PriorityModel;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class RepairController extends Controller
 {
     use SoftDeletes;
+
     /**
      * Display a listing of the resource.
      */
@@ -26,7 +28,9 @@ class RepairController extends Controller
         $priorities = PriorityModel::with('repairs')->get();
         $statuses = Status::with('repairs')->get();
         $repairs = Repair::with(['customer', 'model', 'status', 'priority'])->simplePaginate(5);
-        // dd();
+
+
+
         return view('Repairs.index', compact('customers', 'models', 'priorities', 'statuses', 'repairs'));
     }
 
@@ -43,6 +47,10 @@ class RepairController extends Controller
      */
     public function store(Request $request)
     {
+        $role = Auth::user()->role;
+        if($role === "USER"){
+            return redirect()->route('repairs.index')->with('error','You Are Not Authorize To Create New Repair');
+        }
         $request->validate([
             'name' => 'required|exists:customers,id',
             'phone_number' => 'required|string|max:15',
@@ -50,7 +58,6 @@ class RepairController extends Controller
             'issue' => 'required|string|max:255',
             'priority' => 'required|exists:priorities,id',
             'status' => 'required|exists:statuses,id',
-            // 'pickup_date' => 'required|date',
         ]);
 
         $save = Repair::query()->create([
@@ -60,6 +67,7 @@ class RepairController extends Controller
             'priority_id' => $request->input('priority'),
             'status_id' => $request->input('status'),
             'issue_description' => $request->input('issue'),
+            'user_id' => Auth::id(),
         ]);
         if ($save) {
             return redirect()->back()->with('success', 'Repair created successfully.');
@@ -73,6 +81,8 @@ class RepairController extends Controller
      */
     public function show(int $id)
     {
+        // Gate::authorize('show', Repair::class);
+
         $repair = Repair::with(['customer', 'model', 'priority', 'status'])->findOrFail($id);
         return view('Repairs.show', compact('repair'));
     }
@@ -80,8 +90,11 @@ class RepairController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
+
     public function edit(int $id)
     {
+        // Gate::authorize('edit', Repair::class);
+
         $repair = Repair::with(['customer', 'model', 'priority', 'status'])->findOrFail($id);
         return view('Repairs.edit', compact('repair'));
     }
@@ -107,7 +120,7 @@ class RepairController extends Controller
         $repair->update($validatedData);
 
         return redirect()->route('repairs.index')->with('success', 'Repair updated successfully.');
-        // dd($request->all());
+
     }
 
     public function searchByTicket(Request $request)
@@ -133,6 +146,9 @@ class RepairController extends Controller
      */
     public function destroy(int $id)
     {
+
+        // Gate::authorize('delete', Repair::class);
+
         $repair = Repair::findOrFail($id);
         $repair->delete();
 

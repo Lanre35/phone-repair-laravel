@@ -10,7 +10,7 @@
                         <h4 class="mb-1">{{ $repair->customer->name ?? '-' }}</h4>
                         <span class="badge bg-primary mb-2">{{ $repair->status->name ?? '-' }}</span>
                         <p class="text-muted small text-center mb-1">Ticket #: {{ $repair->ticket_number }}</p>
-                        <a href="{{ route('repairs.edit', $repair->id) }}" class="btn btn-warning btn-sm mb-2">Edit</a>
+                        @can('edit',$repair)<a href="{{ route('repairs.edit', $repair->id) }}" class="btn btn-warning btn-sm mb-2">Edit</a>@endcan
                         <a href="{{ route('repairs.index') }}" class="btn btn-secondary btn-sm">Back</a>
 
                     </div>

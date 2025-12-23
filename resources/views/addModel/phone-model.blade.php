@@ -28,14 +28,14 @@
                                 <div class="row g-3">
                                     <div class="col-12">
                                         <label for="model" class="form-label">Model</label>
-                                        <input type="text" name="model" class="form-control" id="model">
+                                        <input type="text" name="model" class="form-control" id="model" required>
                                         @error('model')
                                             <span class="text text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                     <div class="col-12">
                                         <label for="model_number" class="form-label">Model Number</label>
-                                        <input type="text" name="model_number" class="form-control" id="model_number">
+                                        <input type="text" name="model_number" class="form-control" id="model_number" required>
                                         @error('model_number')
                                             <span class="text text-danger">{{ $message }}</span>
                                         @enderror

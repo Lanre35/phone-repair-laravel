@@ -52,7 +52,7 @@ Route::controller(PhoneController::class)->middleware('auth')->group(function(){
 Route::controller(RepairController::class)->middleware('auth')->group(function () {
     Route::resource('repairs', RepairController::class);
     Route::get('show/{id}', [RepairController::class, 'show']);
-    Route::get('edit/{id}', [RepairController::class, 'edit']);
+    Route::get('edit/{id}', [RepairController::class, 'edit'])->can('edit', Repair::class);
     Route::get('repairs/restore/{id}', [RepairController::class, 'restore'])->name('repairs.restore');
     Route::get('search-by-ticket', [RepairController::class, 'searchByTicket'])->name('search.by.ticket');
     Route::get('search-by-date',[RepairController::class,'searchByDate'])->name('search.by.date');

@@ -29,9 +29,6 @@ $(document).ready(function(){
             success: function(response) {
 
                 $('tbody').html(response.tableHtml);
-
-                // console.log($('tbody').html(response.tableHtml));
-
                 // Handle the successful response
                 // Show rows that start with the search value
 
@@ -47,9 +44,6 @@ $(document).ready(function(){
                     }
 
                 }).parent().show();
-
-
-
             },
             error: function(xhr) {
                 console.error('Search error:', xhr);

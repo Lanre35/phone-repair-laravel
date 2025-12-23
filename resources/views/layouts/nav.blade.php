@@ -30,9 +30,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        @can('setting')
+                            
                         <a href="{{ route('setting.index') }}" class="nav-link d-flex align-items-center {{ request()->routeIs('setting.index') ? 'active bg-primary text-white rounded' : 'text-dark' }}">
                             <span class="me-2"><i class="bi bi-gear-fill"></i></span> Settings
                         </a>
+                        @endcan
                     </li>
                 </ul>
             </nav>

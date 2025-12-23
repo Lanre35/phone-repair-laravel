@@ -36,7 +36,6 @@ class InventoryController extends Controller
      */
     public function store(InventoryValRequest $request)
     {
-
         Inventory::create($request->validated());
         return redirect()->back()->with('success', 'Inventory item added successfully!');
     }
@@ -49,8 +48,11 @@ class InventoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Inventory $inventory)
+    public function edit(Request $request,Inventory $inventory)
     {
+        if ($request->user()->role === 'USER') {
+            return redirect()->route('inventories.index')->with('error', 'You are not allow to edit');
+        }
         $phoneModels = PhoneModel::orderBy('model')->get();
 
         $products = Product::orderBy('product')->get();
@@ -63,6 +65,9 @@ class InventoryController extends Controller
      */
     public function update(InventoryValRequest $request, Inventory $inventory)
     {
+        if ($request->user()->role === 'USER') {
+            return redirect()->route('inventories.index')->with('error', 'You are not allow to update');
+        }
         $validated = $request->validate($request->updateRules($inventory));
         $inventory->update($validated);
         if($inventory){
@@ -74,8 +79,11 @@ class InventoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Inventory $inventory)
+    public function destroy(Request $request,Inventory $inventory)
     {
+        if ($request->user()->role === 'USER') {
+            return redirect()->route('inventories.index')->with('error', 'You are not allow to edit');
+        }
         $inventory = Inventory::find($inventory->id);
         if (!$inventory) {
             return redirect()->back()->with('error', 'Inventory item not found!');

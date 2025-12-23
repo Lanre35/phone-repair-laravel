@@ -38,7 +38,9 @@ class CustomerController extends Controller
      */
     public function store(CustomerValRequest $request)
     {
-
+        if($request->user()->role === 'USER'){
+            return redirect()->route('customers.index')->with('error','You are not authorized to create customers.');
+        }
 
         Customer::create($request->validated());
 
@@ -58,8 +60,11 @@ class CustomerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Customer $customer)
+    public function edit(Request $request,Customer $customer)
     {
+        if($request->user()->role === 'USER'){
+            return redirect()->route('customers.index')->with('error','You are not authorized to edit customer.');
+        }
         $customer->load('repairs');
         return view('customers.edit', compact('customer'));
     }
@@ -69,8 +74,9 @@ class CustomerController extends Controller
      */
     public function update(CustomerValRequest $request, Customer $customer)
     {
-
-
+        if($request->user()->role === 'USER'){
+            return redirect()->route('customers.index')->with('error', 'You are not authorized to create customer.');
+        }
         $customer->update($request->validated());
         return redirect()->route('customers.index')
             ->with('success', 'Customer updated successfully.');
@@ -79,8 +85,9 @@ class CustomerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Customer $customer)
+    public function destroy(Request $request,Customer $customer)
     {
+
         $customer->delete();
 
         return redirect()->route('customers.index')

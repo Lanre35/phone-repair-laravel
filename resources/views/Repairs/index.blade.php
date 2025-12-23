@@ -9,6 +9,12 @@
         <!-- Main Content Area -->
         <div class="col-md-9">
             {{-- modal Action --}}
+
+            @if(session('error'))
+                <div class="mb-3 alert alert-danger d-flex justify-content-between align-items-center">
+                    <span>{{ session('error') }}</span>
+                </div>
+            @enderror
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2 class="mt-2">Repair Jobs</h2>
                 <button class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#addRepairModal">
@@ -204,33 +210,40 @@
                                     <td><span class="badge bg-warning text-dark">{{ $repair->final_cost }}</span></td>
                                     <td>
                                         @if(!empty($repair->completion_date))
-                                        <span class="badge bg-secondary">{{ $repair->completion_date }}</span>
+                                            <span class="badge bg-secondary">{{ $repair->completion_date }}</span>
                                         @else
-                                        <span class="text-muted">N/A</span>
+                                            <span class="text-muted">N/A</span>
                                         @endif
                                     </td>
                                     <td>
+
+
                                         <div class="btn-group" role="group">
+
                                             <a href="{{ route('repairs.show', $repair->id) }}" class="btn btn-sm btn-info" title="View">
                                                 <i class="bi bi-eye"></i>
                                             </a>
-                                            <a href="{{ route('repairs.edit', $repair->id) }}" class="btn btn-sm btn-warning" title="Edit">
-                                                <i class="bi bi-pencil"></i>
-                                            </a>
-                                            <form action="{{ route('repairs.destroy', $repair->id) }}" method="POST" style="display: inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')" title="Delete">
-                                                    <i class="bi bi-trash"></i>
-                                                </button>
-                                            </form>
+                                            @can('edit', $repair)
+                                                <a href="{{ route('repairs.edit', $repair->id) }}" class="btn btn-sm btn-warning" title="Edit">
+                                                    <i class="bi bi-pencil"></i>
+                                                </a>
+                                            @endcan
+
+                                            @can('delete', $repair)
+                                                <form action="{{ route('repairs.destroy', $repair->id) }}" method="POST" style="display: inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')" title="Delete">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </form>
+                                            @endcan
                                         </div>
                                     </td>
                                 </tr>
                                 @empty
                                 <tr>
                                     <td colspan="10" class="text-center">No repairs found.</td>
-
                                 </tr>
                                 @endforelse
 

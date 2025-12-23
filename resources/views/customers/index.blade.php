@@ -32,6 +32,12 @@
 
         <!-- Main Content Area -->
         <div class="col-md-9">
+             @if(session('error'))
+                <div class="alert alert-danger m-3">
+                    {{ session('error') }}
+                </div>
+              @endif
+
             {{-- modal Action --}}
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2>Customer</h2>
@@ -39,7 +45,6 @@
                     <i class="bi bi-plus-circle"></i> Add New Customer
                 </button>
             </div>
-
             <div class="modal fade" id="addCustomerModal" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content rounded-4 border-0">
@@ -82,6 +87,7 @@
                 <div class="card-header bg-primary text-white">
                     <h5 class="m-0 fw-bold"><i class="bi bi-people me-2"></i>Recent Customers</h5>
                 </div>
+
                 <div class="card-body p-0">
                     <div class="table-responsive">
                         <table class="table table-hover align-middle mb-0">
@@ -117,16 +123,18 @@
                                             <a href="{{ route('customers.show', $customer) }}" class="btn btn-sm btn-info" title="View">
                                                 <i class="bi bi-eye"></i>
                                             </a>
-                                            <a href="{{ route('customers.edit', $customer) }}" class="btn btn-sm btn-warning" title="Edit">
-                                                <i class="bi bi-pencil"></i>
-                                            </a>
-                                            <form action="{{ route('customers.destroy', $customer) }}" method="POST" style="display: inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')" title="Delete">
-                                                    <i class="bi bi-trash"></i>
-                                                </button>
-                                            </form>
+                                            @can('edit', $customer)
+                                                <a href="{{ route('customers.edit', $customer) }}" class="btn btn-sm btn-warning" title="Edit">
+                                                    <i class="bi bi-pencil"></i>
+                                                </a>
+                                                <form action="{{ route('customers.destroy', $customer) }}" method="POST" style="display: inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')" title="Delete">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </form>
+                                            @endcan
                                         </div>
                                     </td>
                                 </tr>
